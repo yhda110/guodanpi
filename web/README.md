@@ -1,29 +1,17 @@
-# guodanpi
+# 很高兴来到果丹皮APP
 
-## Project setup
-```
-npm install
-```
+这是一款资讯类软件
+##### web 基于vue-cli@3.0
 
-### Compiles and hot-reloads for development
+构建 
+```
+ npm run build
+```
+开发
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
-```
+by 安笙、Storm
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
