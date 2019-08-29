@@ -240,6 +240,6 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
-    'appid' => 'wx158ef45d6cadc66f',
-    'appsecret' =>'e0d730250e0ee1c93b7af8ba0823c7ef'
+    'appid' => '******',
+    'appsecret' =>'******'
 ];
