@@ -8,24 +8,40 @@
 		</div>
 		<div class="tab_bar_wrap">
 			<div class="tab_bar">
-				<span class="active">推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
-				<span>推荐</span>
+				<span :class="{'active': item.name === selectTab}" v-for="(item ,index) in tabList" :key="index" @click="tebTap(item.name)">{{item.name}}</span>
 			</div>
-			<vav-icon class="add_tab_item" name="add-o" size=".5rem"></vav-icon>
+			<div class="list_shadow"></div>
+			<van-icon name="add-o" color="#d43d3d" class="add_tab_item" size="0.5rem"></van-icon>
 		</div>
 	</div>
 </template>
 <script>
 export default {
-	name: 'PageHeader'
+	name: 'PageHeader',
+	data() {
+		return {
+			selectTab: '推荐',
+			tabList: [
+				{name: '推荐', id: ''},
+				{name: '视频', id: ''},
+				{name: '热点', id: ''},
+				{name: '社会', id: ''},
+				{name: '娱乐', id: ''},
+				{name: '军事', id: ''},
+				{name: '科技', id: ''},
+				{name: '汽车', id: ''},
+				{name: '房产', id: ''},
+				{name: '家居', id: ''},
+				{name: '体育', id: ''},
+				{name: '财经', id: ''},
+			]
+		}
+	},
+	methods: {
+		tebTap(name) {
+			this.selectTab = name
+		}
+	}
 }
 </script>
 <style lang="less" scoped>
@@ -71,10 +87,18 @@ export default {
 			}
 		}
 	}
+	.list_shadow{
+		background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAABXCAQAAACjUt0DAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAAAEgAAABIAEbJaz4AAAAJdnBBZwAAABIAAABXAK421QoAAAFiSURBVEjH1ZbbtoMgDERnKP//yaYPVSAhF077dHQtamU7k0RKAxwcPCF4ItF+tWMNsVZS91uJhNlRX7FGPMgizOrEObJSiZUUAnRkR6q0qnErm7Lhc9UDBaXUt0kN0FOaOo4SQ5BRCahOA3HT5KwTE50GZhV37VazJKYljjE2SE+sPsittC1XW/FmgNVsZJcvuhvrAbLqffNadPXLYgaLzs8wWSo6rk9FYdeBUW/x1DRswfS6ysuNlcDZ7ssTSCpIfDsZn/J8b+Omh8pjR/X8DkuWndwnINpOlukFbtvzVslAEmF+TCMaCC4fkr8oKUgVzmQ4IBojHfqFqwd28O0S6AXA7ib2P+HOTlzLcXZ3+tFz6yRObiOmGY+3k6ev5XN97Uq7FoCXkl5HTrT6tQiw2u1aY/TrZF551jyMFPZiOqW1O5zXiJx1PV/2Tw52tD8ddYc/9Zlq7qhBrlrtuhX/98cbycGBFpNaiv0AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTQtMDItMjdUMTc6NDQ6NDErMDg6MDDFbrv7AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE0LTAyLTI3VDE3OjQ0OjQxKzA4OjAwtDMDRwAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAASUVORK5CYII=') no-repeat center right / contain;
+		position: absolute;
+		right: .933333rem;
+		top: 0;
+		width: .666667rem;
+		height: 1rem;
+	}
 	.add_tab_item{
 		position: absolute;
-		right: 0;
-		top: 0;
+		right: .2rem;
+		top: .2rem;
 	}
 }
 </style>

@@ -2,7 +2,7 @@
   <div id="app">
     <PageHeader></PageHeader>
     <router-view></router-view>
-    <PageFooter></PageFooter>  
+    <!-- <PageFooter></PageFooter>   -->
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   name: 'app',
   components: {
     PageHeader,
-    PageFooter
+    // PageFooter
   }
 }
 </script>

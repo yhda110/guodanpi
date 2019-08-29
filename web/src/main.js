@@ -1,9 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './router'
+import store from './store'
 import App from './App.vue'
-import Vant from 'vant';
-import 'vant/lib/index.css';
+
+import qs from 'qs'
+import Axios from 'axios'
+import Vant from 'vant'
+import 'vant/lib/index.css'
+
+Vue.prototype.$http = Axios
+Vue.prototype.$qs = qs
 
 Vue.use(VueRouter)
 Vue.use(Vant)
@@ -16,5 +23,6 @@ const router = new VueRouter({
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

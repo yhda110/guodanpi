@@ -1,10 +1,9 @@
 <template>
 	<div>
-		
+		xxx
 	</div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
 export default {
 	data () {
 		return {
@@ -14,20 +13,21 @@ export default {
 			newsList: []
 		}
 	},
-	computed: {
-		...mapState(['count'])
-	},
 	mounted () {
 		this.getNewsList()
 	},
 	methods: {
-		...mapActions(['addFun', 'reductionFun']),
 		getNewsList() {
-			
+			this.$http.get('https://api.apiopen.top/getJoke',{
+				params: {
+					page: this.pageNum,
+					count: this.pageCount,
+					type: this.pageType
+				}
+			}).then((response) => {
+				console.log(response.data.result)
+			})
 		}
 	}
 }
 </script>
-<style lang="less" scoped>
-
-</style>
