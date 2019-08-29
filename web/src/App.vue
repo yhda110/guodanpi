@@ -24,7 +24,9 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   position: relative;
+  padding-top: 2.16rem;
   /* top: 1.875rem; */
   /* bottom: 1.875rem; */
+  
 }
 </style>
