@@ -8,7 +8,7 @@
 
 <script>
 import PageHeader from './components/Header'
-import PageFooter from './components/Footer'
+// import PageFooter from './components/Footer'
 
 export default {
   name: 'app',
