@@ -1,6 +1,19 @@
 <template>
 	<div>
-		
+		<van-pull-refresh v-model="refreshLoading" @refresh="onRefresh">
+			<van-list
+				v-model="listLoading"
+				:finished="listFinished"
+				finished-text="没有更多了"
+				@load="getNewsList"
+			>
+				<van-cell
+					v-for="item in newsList"
+					:key="item"
+					:title="item"
+				/>
+			</van-list>
+		</van-pull-refresh>
 	</div>
 </template>
 <script>
@@ -11,7 +24,10 @@ export default {
 			pageNum: 1,
 			pageCount: 10,
 			pageType: 'text',
-			newsList: []
+			newsList: [],
+			listLoading: false,
+			listFinished: true,
+			refreshLoading: false
 		}
 	},
 	computed: {
@@ -24,7 +40,14 @@ export default {
 		...mapActions(['addFun', 'reductionFun']),
 		getNewsList() {
 			
-		}
+		},
+		onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功')
+        this.refreshLoading = false
+        this.addFun()
+      }, 500)
+    }
 	}
 }
 </script>
