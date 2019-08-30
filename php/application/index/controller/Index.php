@@ -1,11 +1,40 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: 李子杰
+ * Date: 2019/8/22
+ * Time: 11:32
+ * 首页控制器
+ */
 namespace app\index\controller;
+use app\index\model\bannerModel;
+use think\Model;
+use think\db;
 use system\index\test;
+use app\index\model\indexModel;
 class Index
 {
     public function index()
     {
         return view();
+    }
+    /*
+     * 首页加载信息
+     * */
+    public function index_InfoAction()
+    {
+        //获取banner图
+        $result = array();
+        $banner_info = new bannerModel();
+        $info = new indexModel();
+        //获取首页banner
+        $result['banner'] = $banner_info->getBanner(3);
+        //获取首页type
+        $result['type'] =  DB::table('gdp_type')->order('id desc')->select();
+        //获取首页信息
+        $result['info'] = $info->getInfo();
+
+        returnJsonInfo($result);
     }
     public function test()
     {
