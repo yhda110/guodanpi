@@ -78,7 +78,7 @@ export default {
 		.logo {
 			width: 2.213333rem;
 			height: 100%;
-			background: url(https://s3b.pstatp.com/growth/mobile_list/image/wap_logo@3x_581de69e.png) no-repeat center center/ contain;
+			background: url(../assets/wap_logo@3x_581de69e.png) no-repeat center center/ contain;
 			margin: 0 auto;
 		}
 	}
