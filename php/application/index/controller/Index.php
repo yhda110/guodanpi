@@ -48,39 +48,5 @@ class Index
         $haha->index();
     }
 
-    /*
-     * 用于微信token验证
-     * */
-//    public function wechatUrl(Request $request)
-//    {
-//        $this->valid();
-//    }
-//    public function valid(){
-//        $data = Request::instance()->get();
-//        $signature = $data['signature'];
-//        $timestamp = $data['timestamp'];
-//        $nonce = $data['nonce'];
-//        $echostr = $data['echostr'];
-//
-//        /**
-//         * 计算微信签名
-//         */
-//        $token = 'guodanpi';
-//        //将参数组成一维数组
-//        $signeSeed = [$token, $timestamp, $nonce];
-//        //对参数字典序排序
-//        sort($signeSeed, SORT_STRING);
-//        //拼接成字符串
-//        $signeStr = implode($signeSeed);
-//        //加密字符串成签名
-//        $signeHash = sha1($signeStr);
-//
-//        if ($signeHash == $signature) {
-//            echo $echostr;
-//        }else{
-//            return false;
-//        }
-//
-//    }
 
 }

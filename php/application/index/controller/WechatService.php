@@ -1,9 +1,11 @@
 <?php
 /**
+ * 微信登录服务类
  * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/9/3
- * Time: 15:26
+ * @author : 李子杰
+ * @email : ansheng1021@163.com
+ * @Date: 2019/9/3
+ * @Time: 15:26
  */
 
 namespace app\index\controller;
