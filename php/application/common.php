@@ -29,3 +29,24 @@ function returnJsonInfo($data){
     $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     echo $json;
 }
+function _request($curl, $https = true, $method = "GET", $data = null){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $curl);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    if($https){
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+    }
+    if($method == 'POST'){
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($data))
+        );
+    }
+
+    $content = curl_exec($ch);
+    return $content;
+}
