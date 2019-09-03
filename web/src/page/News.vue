@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<van-pull-refresh v-model="refreshLoading" @refresh="onRefresh">
-			<van-list
+		<van-list
 				class="list_wrap"
 				v-model="listLoading"
 				:finished="listFinished"
@@ -22,7 +21,6 @@
 					</ul>
 				</div>
 			</van-list>
-		</van-pull-refresh>
 	</div>
 </template>
 <script>
