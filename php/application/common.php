@@ -10,8 +10,11 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-
-/*返回错误信息*/
+/**
+ * @param $msg
+ * @param string $code
+ * @return 错误信息
+ */
 function returnJsonErrorInfo($msg,$code=''){
     header('Content-Type: text/javascript; charset=utf-8');
     $result['flag'] = false;
@@ -20,6 +23,11 @@ function returnJsonErrorInfo($msg,$code=''){
     $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     echo $json;
 }
+
+/**
+ * @param $data
+ * @return 成功信息
+ */
 function returnJsonInfo($data){
     header('Content-Type: text/javascript; charset=utf-8');
     $result['flag'] = true;
@@ -29,6 +37,14 @@ function returnJsonInfo($data){
     $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     echo $json;
 }
+
+/**
+ * @param $curl
+ * @param bool $https
+ * @param string $method
+ * @param null $data
+ * @return 请求信息
+ */
 function _request($curl, $https = true, $method = "GET", $data = null){
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $curl);
@@ -49,4 +65,13 @@ function _request($curl, $https = true, $method = "GET", $data = null){
 
     $content = curl_exec($ch);
     return $content;
+}
+
+/**
+ * @param $url
+ */
+function redirect($url)
+{
+    header("Location: $url");
+    exit();
 }

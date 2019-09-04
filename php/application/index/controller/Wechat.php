@@ -42,19 +42,22 @@ class Wechat
             return false;
         }
     }
-    /*
-     * 微信登录
-     * */
+
+    /**
+     * 微信登录方法
+     * @param Request $request
+     */
     public function login(Request $request)
     {
         $state = trim($request->get('state',''));
         $weixinService = new WechatService();
         $codeUrl = $weixinService->getCodeUrl($state);
-        $this->redirect($codeUrl);
+        redirect($codeUrl);
     }
-    /*
+    /**
      * 微信登录回调
-     * */
+     * @param Request $request
+     */
     public function wechatLogin(Request $request)
     {
         $wechatService = new WeChatService();
@@ -83,11 +86,7 @@ class Wechat
             }
         }
     }
-    function redirect($url)
-    {
-            header("Location: $url");
-            exit();
-    }
+
 
 
 }

@@ -23,9 +23,12 @@ class Index
     {
 //        return view();
     }
-    /*
-     * 首页加载信息
-     * */
+
+    /**
+     * @throws \think\exception\DbException
+     * @throws db\exception\DataNotFoundException
+     * @throws db\exception\ModelNotFoundException
+     */
     public function index_InfoAction()
     {
         //获取banner图
