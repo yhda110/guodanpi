@@ -7,20 +7,31 @@
  * 首页控制器
  */
 namespace app\index\controller;
-use app\index\model\bannerModel;
+use app\index\model\wechatModel;
+use think\Request;
+use system\index\WXBizDataCrypt\WXBizDataCrypt;
 use think\Model;
 use think\db;
 use system\index\test;
 use app\index\model\indexModel;
+use system\index\WXBizMsgCrypt;
+//use app\index\controller\Wechat;
+header("Content-type: text/html; charset=utf-8");
 class Index
 {
     public function index()
     {
-        return view();
+//        $wechatLogin = new Wechat();
+//        $userInfo = $wechatLogin->login();
+//        echo $userInfo;
+//        return view();
     }
-    /*
-     * 首页加载信息
-     * */
+
+    /**
+     * @throws \think\exception\DbException
+     * @throws db\exception\DataNotFoundException
+     * @throws db\exception\ModelNotFoundException
+     */
     public function index_InfoAction()
     {
         //获取banner图
@@ -36,10 +47,12 @@ class Index
 
         returnJsonInfo($result);
     }
-    public function test()
-    {
-        require_once(ROOT_PATH."system/test.php");
-        $haha = new test\test();
-        $haha->index();
-    }
+//    public function test()
+//    {
+//        require_once(ROOT_PATH."system/test.php");
+//        $haha = new test\test();
+//        $haha->index();
+//    }
+
+
 }

@@ -15,7 +15,7 @@ return [
     // 服务器地址
     'hostname'        => '47.98.140.221',
     // 数据库名
-    'database'        => 'loveNote',
+    'database'        => 'gdp',
     // 用户名
     'username'        => 'root',
     // 密码

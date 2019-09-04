@@ -8,10 +8,12 @@
 // +----------------------------------------------------------------------
 // | Author: 李子杰 <ansheng1021@163.com>
 // +----------------------------------------------------------------------
-
 // 应用公共文件
-
-/*返回错误信息*/
+/**
+ * @param $msg
+ * @param string $code
+ * @return 错误信息
+ */
 function returnJsonErrorInfo($msg,$code=''){
     header('Content-Type: text/javascript; charset=utf-8');
     $result['flag'] = false;
@@ -20,6 +22,11 @@ function returnJsonErrorInfo($msg,$code=''){
     $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     echo $json;
 }
+
+/**
+ * @param $data
+ * @return 成功信息
+ */
 function returnJsonInfo($data){
     header('Content-Type: text/javascript; charset=utf-8');
     $result['flag'] = true;
@@ -28,4 +35,55 @@ function returnJsonInfo($data){
     $result['data'] = $data;
     $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     echo $json;
+}
+
+/**
+ * @param $curl
+ * @param bool $https
+ * @param string $method
+ * @param null $data
+ * @return 请求信息
+ */
+function _request($curl, $https = true, $method = "GET", $data = null){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $curl);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    if($https){
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+    }
+    if($method == 'POST'){
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($data))
+        );
+    }
+
+    $content = curl_exec($ch);
+    return $content;
+}
+
+/**
+ * @param $url
+ */
+function redirect($url)
+{
+    header("Location: $url");
+    exit();
+}
+
+function nonceStr() {
+    static $seed = array(0,1,2,3,4,5,6,7,8,9);
+    $str = '';
+    for($i=0;$i<8;$i++) {
+        $rand = rand(0,count($seed)-1);
+        $temp = $seed[$rand];
+        $str .= $temp;
+        unset($seed[$rand]);
+        $seed = array_values($seed);
+    }
+    return $str;
 }
