@@ -15,7 +15,6 @@ class wechatModel extends Model
     function check_user($open)
     {
         $res = DB::table($this->table)->where($open)->find();
-
         return $res;
     }
     function insert_open($data)

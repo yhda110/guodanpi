@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 // | Author: 李子杰 <ansheng1021@163.com>
 // +----------------------------------------------------------------------
-
 // 应用公共文件
 /**
  * @param $msg
@@ -74,4 +73,17 @@ function redirect($url)
 {
     header("Location: $url");
     exit();
+}
+
+function nonceStr() {
+    static $seed = array(0,1,2,3,4,5,6,7,8,9);
+    $str = '';
+    for($i=0;$i<8;$i++) {
+        $rand = rand(0,count($seed)-1);
+        $temp = $seed[$rand];
+        $str .= $temp;
+        unset($seed[$rand]);
+        $seed = array_values($seed);
+    }
+    return $str;
 }

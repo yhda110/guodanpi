@@ -12,7 +12,7 @@ use think\db;
 
 class User extends Model
 {
-    protected $table = 'yda_User';
+    protected $table = 'gdp_user';
     function getAll($where='',$order='',$limit='')
     {
         $res = DB::table($this->table)->where($where)->order($order)->limit($limit)->select();
@@ -20,13 +20,12 @@ class User extends Model
     }
     function getOne($where)
     {
-        $res = DB::table($this->table)->where($where)->select();
+        $res = DB::table($this->table)->where($where)->find();
         return $res;
     }
     function insertUser($data)
     {
-        $insert_data = $data;
-        $res = DB::table($this->table)->insertGetId($insert_data);
+        $res = DB::table($this->table)->insertGetId($data);
         return $res;
     }
     function updateUser($where,$data)
