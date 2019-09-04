@@ -34,7 +34,7 @@ export default {
 			refreshLoading: false,
 			param: {
 				cid: 56,
-				ext: 'games',
+				ext: 'house',
 				token: 'c786875b8e04da17b24ea5e332745e0f',
 				num: 10,
 				// expIds: '20190106A13PFT%7C20190108A04MLS',

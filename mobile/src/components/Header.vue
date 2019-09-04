@@ -1,12 +1,12 @@
 <template>
 	<div class="top_bar">
 		<div class="title">
-			<van-icon name="envelop-o" info="1" color="#fff" class="massage" size=".5rem"></van-icon>
+			<!-- <van-icon name="envelop-o" info="1" color="#fff" class="massage" size=".5rem"></van-icon> -->
 			<div class="logo">
 			</div>
-			<van-icon name="search" color="#fff" class="search" size=".6rem"></van-icon>
+			<!-- <van-icon name="search" color="#fff" class="search" size=".6rem"></van-icon> -->
 		</div>
-		<div class="tab_bar_wrap">
+		<!-- <div class="tab_bar_wrap">
 			<div class="tab_bar">
 				<span 
 					:class="{'active': item.routerLink === selectTab}" 
@@ -16,7 +16,7 @@
 			</div>
 			<div class="list_shadow"></div>
 			<van-icon name="add-o" color="#d43d3d" class="add_tab_item" size="0.5rem"></van-icon>
-		</div>
+		</div> -->
 	</div>
 </template>
 <script>

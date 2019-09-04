@@ -3,7 +3,7 @@ import News from '../page/News.vue'
 import Jock from '../page/Jock.vue'
 export default [
 	{
-		path: '/home',
+		path: '/',
 		name: 'Home',
 		component: Home
 	},
@@ -19,6 +19,6 @@ export default [
 	},
 	{
 		path: '*',
-		component: News
+		component: Home
 	}
 ]
