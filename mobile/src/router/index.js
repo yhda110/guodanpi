@@ -1,9 +1,10 @@
-import Home from '../page/Home.vue'
-import News from '../page/News.vue'
-import Jock from '../page/Jock.vue'
+import Home from '../page/Home/index.vue'
+import News from '../page/News/index.vue'
+// import Jock from '../page/Jock/index.vue'
+import Upload from '../page/Upload/index.vue'
 export default [
 	{
-		path: '/',
+		path: '/home',
 		name: 'Home',
 		component: Home
 	},
@@ -13,12 +14,13 @@ export default [
 		component: News
 	},
 	{
-		path: '/jock',
-		name: 'Jock',
-		component: Jock
+		path: '/upload',
+		name: 'Upload',
+		component: Upload
 	},
 	{
 		path: '*',
+		name: 'not found',
 		component: Home
 	}
 ]

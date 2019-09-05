@@ -1,20 +1,24 @@
 <template>
   <div id="app">
-    <PageHeader></PageHeader>
+    <IndexHeader v-show="indexHeaderSHow"></IndexHeader>
     <router-view></router-view>
-    <!-- <PageFooter></PageFooter>   -->
+    <PageFooter></PageFooter>  
   </div>
 </template>
 
 <script>
-import PageHeader from './components/Header'
-// import PageFooter from './components/Footer'
-
+import IndexHeader from './components/IndexHeader'
+// import PageHeader from './components/Header'
+import PageFooter from './components/Footer'
+import { mapState } from 'vuex'
 export default {
   name: 'app',
   components: {
-    PageHeader,
-    // PageFooter
+    IndexHeader,
+    PageFooter
+  },
+  computed: {
+    ...mapState(['indexHeaderSHow'])
   }
 }
 </script>
@@ -24,9 +28,12 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #2c3e50;
   position: relative;
-  padding-top: 2.16rem;
+  /* padding-top: 1.17333333rem; */
   /* top: 1.875rem; */
   /* bottom: 1.875rem; */
-  
+  touch-action: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>

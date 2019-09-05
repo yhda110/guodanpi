@@ -3,30 +3,18 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
-		count: 1,
-		newsPageNum: 0,
-		newsList: []
+		indexHeaderSHow: true,
+		headerShow: false,
+		footerShow: true
 	},
 	mutations: {
-		add(state) {
-			state.count = state.count + 1
-		},
-		reduction(state) {
-			state.count = state.count - 1
-		},
-		pushList(state, data) {
-			state[data.type] = state[data.type].concat(data.data)
+		setState(state, data) {
+			state[data.key] = data.value
 		}
 	},
 	actions: {
-		addFun(context) {
-			context.commit('add')
-		},
-		reductionFun(context) {
-			context.commit('reduction')
-		},
-		pushList(context, data) {
-			context.commit('pushList', data)
+		setState(context, data) {
+			context.commit('setState', data)
 		}
 	}
 })
