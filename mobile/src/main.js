@@ -14,6 +14,7 @@ Vue.prototype.$qs = qs
 
 Vue.use(VueRouter)
 Vue.use(Vant)
+
 Vue.config.productionTip = false
 
 const router = new VueRouter({

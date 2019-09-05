@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <PageHeader v-show="true"></PageHeader> -->
     <IndexHeader v-show="indexHeaderSHow"></IndexHeader>
     <router-view></router-view>
     <PageFooter></PageFooter>  
@@ -15,6 +16,7 @@ export default {
   name: 'app',
   components: {
     IndexHeader,
+    // PageHeader,
     PageFooter
   },
   computed: {
