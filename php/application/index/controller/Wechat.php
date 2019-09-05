@@ -115,10 +115,10 @@ class Wechat
                 $new_user_info['pic_url'] = $imgModel->getUrlById($new_user_info['pic_id'])['pic_url'];
                 $user = $new_user_info;
             }else{
-                echo returnJsonErrorInfo(self::$returnCode[501],501);
+                returnJsonErrorInfo(self::$returnCode[501],501);
             }
         }
-        echo returnJsonInfo($user);
+         returnJsonInfo($user);
     }
 
 

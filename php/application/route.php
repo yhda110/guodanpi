@@ -9,11 +9,18 @@
 // | Author: 李子杰 <ansheng1021@163.com>
 // +----------------------------------------------------------------------
 use think\Route;
-Route::rule('index1',"index/Index/index");
-//微信测试Token验证
+Route::rule('index',"index/Index/index");
+//微信登录
 Route::rule('wechat',"index/Wechat/index");
 Route::rule('wechat/login',"index/Wechat/login");
 Route::rule('wechat/wechatLogin',"index/Wechat/wechatLogin");
+
+//标签路由
+Route::rule('tag/getAll',"index/Tags/getAllTag");
+Route::rule('tag/insertTag',"index/Tags/insertTag");
+Route::rule('tag/deleteTag',"index/Tags/deleteTag");
+Route::rule('tag/updateTag',"index/Tags/updateTag");
+
 
 Route::rule('indexInfo',"index/Index/index_InfoAction");
 Route::rule('hello',"index/Index/test");

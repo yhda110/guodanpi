@@ -15,6 +15,7 @@ use think\db;
 use system\index\test;
 use app\index\model\indexModel;
 use system\index\WXBizMsgCrypt;
+use app\index\model\tagsModel;
 //use app\index\controller\Wechat;
 header("Content-type: text/html; charset=utf-8");
 class Index
@@ -47,6 +48,7 @@ class Index
 
         returnJsonInfo($result);
     }
+
 //    public function test()
 //    {
 //        require_once(ROOT_PATH."system/test.php");
