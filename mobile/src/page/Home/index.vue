@@ -80,7 +80,7 @@ export default {
 .list_wrap{
 	// padding: .266667rem;
 	position: absolute;
-	top: 2.2rem;
+	top: 2.6rem;
 	bottom: 1.173333rem;
 	left: 0;
 	right: 0;

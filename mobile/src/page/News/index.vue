@@ -24,7 +24,7 @@
 	</div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
 	data () {
 		return {
@@ -32,6 +32,7 @@ export default {
 			listLoading: false,
 			listFinished: true,
 			refreshLoading: false,
+			newsList: [],
 			param: {
 				cid: 56,
 				ext: 'house',
@@ -43,19 +44,19 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['newsList'])
+		// ...mapState(['newsList'])
 	},
 	mounted () {
 		this.getNewsList()
 	},
 	methods: {
-		...mapActions(['pushList']),
+		// ...mapActions(['pushList']),
 		getNewsList() {
 			this.$http.get('/tencent/irs/rcd',{
 				params: {...this.param, page: 1}
 			}).then((response) => {
-				this.pushList({data: response.data.data,type: 'newsList'})
-				// this.newsList = this.newsList.concat(response.data.data)
+				// this.pushList({data: response.data.data,type: 'newsList'})
+				this.newsList = this.newsList.concat(response.data.data)
 				console.log(this.newsList)
 			})
 		},

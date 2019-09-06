@@ -21,6 +21,16 @@ export default {
   },
   computed: {
     ...mapState(['indexHeaderSHow'])
+  },
+  mounted() {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() {
+      // this.$http.get('https://www.lzjrys.store/wechat/wechatLogin').then((response) => {
+      //   console.log(response)
+      // })
+    }
   }
 }
 </script>
