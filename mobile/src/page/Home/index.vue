@@ -17,6 +17,7 @@
 </template>
 <script>
 import vueWaterfallEasy from 'vue-waterfall-easy'
+import { mapActions } from 'vuex'
 export default {
 	name: 'Home',
 	components: {
@@ -30,7 +31,8 @@ export default {
 				token: 'c786875b8e04da17b24ea5e332745e0f',
 				num: 10,
 				// expIds: '20190106A13PFT%7C20190108A04MLS',
-				// page: 1
+				page: 1,
+				
 			},
 			loadingDotStyle: {
 				backgroundColor: '#000'
@@ -39,14 +41,19 @@ export default {
 		}
 	},
 	mounted() {
+		this.setState({key: 'indexHeaderSHow', value: true})
 		this.getNewsList()
+		this.getList()
+
 	},
 	methods: {
+		...mapActions(['setState']),
 		getNewsList() {
 			this.$http.get('/tencent/irs/rcd',{
-				params: {...this.param, page: 1}
+				params: this.param
 			}).then((response) => {
 				let data = response.data.data
+				this.param.page ++
 				data.forEach(element => {
 					this.list.push({
 						...element,
@@ -54,8 +61,11 @@ export default {
 						href: '',
 					})
 				});
-				console.log(this.list)
+				// console.log(this.list)
 			})
+		},
+		getList() {
+			// this.$http.
 		},
 		pullDownMove() {
 			// console.log(2)

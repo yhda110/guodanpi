@@ -4,7 +4,7 @@
 			<!-- <van-icon name="envelop-o" color="#fff" class="massage" size=".5rem"></van-icon> -->
 			<div class="logo">
 			</div>
-			<van-icon  name="add" color="#fff" class="add" size=".6rem" @click="tebTap('upload')"></van-icon>
+			<van-icon  name="photograph" color="#fff" class="add" size=".6rem" @click="tebTap('upload')"></van-icon>
 		</div>
 		<van-tabs v-model="selectTab">
 			<van-tab 

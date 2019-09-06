@@ -5,7 +5,7 @@
 			left-text="返回"
 			left-arrow
 			right-text="上传"
-			@click-left="onClickLeft"
+			@click-left="back"
 			@click-right="onClickRight"
 		/>
 		<div class="content_wrap">
@@ -27,7 +27,7 @@
 </template>
 <script>
 import {mapState, mapActions} from 'vuex'
-import { Toast } from 'vant'
+// import { Toast } from 'vant'
 export default {
 	data() {
 		return {
@@ -35,21 +35,35 @@ export default {
 				url: 'https://img.yzcdn.cn/vant/cat.jpeg',
 				isImage: true
 			}],
-			message: ''
+			message: '',
+			uploadData: {
+				title: '地中海风分享',
+				desc: `的撒发射点发随风倒十分
+士大夫大师傅
+士大夫的事发生范德萨范德萨范德萨发达省份的随风倒十分沙发地方；
+士大夫大师傅士大夫`,
+				imgList: [
+					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
+					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
+					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
+					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
+					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
+				]
+			}
 		}
 	},
 	computed: {
 		...mapState(['headerShow'])
 	},
 	mounted() {
-		Toast('xxxxxxxxxxxxxx')
+		// Toast('xxxxxxxxxxxxxx')
 		this.setState({key:'indexHeaderSHow',  value:false})
-		this.setState({key:'headerShow',  value:false})
+		// this.setState({key:'headerShow',  value:false})
 	},
 	methods: {
 		...mapActions(['setState']),
-		onClickLeft() {
-
+		back() {
+			this.$router.go(-1)
 		},
 		onClickRight() {
 
@@ -73,7 +87,8 @@ export default {
         }
       })
 		},
-		afterRead() {
+		afterRead(file) {
+			console.log(file)
 			
 		}
 	}
