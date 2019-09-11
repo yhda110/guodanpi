@@ -6,11 +6,13 @@
  * Time: 14:29
  */
 
-namespace app\index\controller;
-use think\controller;
+namespace app\admin;
 use think\Request;
 use think\db;
-class BaseController extends controller
+class BaseController
 {
+    function _request()
+    {
 
+    }
 }
