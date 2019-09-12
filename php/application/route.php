@@ -13,6 +13,11 @@ use think\Route;
 Route::rule('index',"index/Index/index");
 Route::rule('show',"index/Index/show");
 
+//新闻咨询
+Route::rule('news',"index/Index/news");
+Route::rule('news/detail',"index/Index/newsGetDetail");
+
+
 //微信登录
 Route::rule('wechat',"index/Wechat/index");
 Route::rule('wechat/login',"index/Wechat/login");

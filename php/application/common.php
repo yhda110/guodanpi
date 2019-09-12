@@ -27,7 +27,7 @@ function returnJsonErrorInfo($msg,$code=''){
  * @param $data
  * @return 成功信息
  */
-function returnJsonInfo($data){
+function returnJsonInfo($data,$count=''){
     header('Content-Type: text/javascript; charset=utf-8');
     $result['flag'] = true;
     $result['code'] = 0;

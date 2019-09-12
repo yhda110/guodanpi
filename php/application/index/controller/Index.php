@@ -13,12 +13,10 @@ use system\ImageService\ImageService;
 use system\userService\userService;
 use think\Controller;
 use think\db;
-use app\index\model\indexModel;
 use think\Loader;
 use app\index\model\ImgModel;
 use think\Request;
-use think\response\View;
-use app\index\controller\Wechat;
+use app\index\model\newsModel;
 require '../vendor/autoload.php';
 header("Content-type: text/html; charset=utf-8");
 const APP_ID = '17207036';
@@ -51,11 +49,43 @@ class Index extends Controller
     }
 
 
+    /*
+     * 获取咨询
+     *
+     * */
+    public function news(Request $request)
+    {
+        $newsModel = new newsModel();
+        $limit = $request->param('limit',10);
+        $offset = $request->param('offset',0);
+        $result = $newsModel->getnews($limit,$offset);
+        if($result['count']>0){
+            returnJsonInfo($result);
+        }else{
+            returnJsonErrorInfo('没有更多了',500);
+        }
+    }
+    public function newsGetDetail(Request $request)
+    {
+        $newsModel = new newsModel();
+        $pid = $request->param('pid',0);
+        if ($pid == 0){
+            returnJsonErrorInfo('pid不正确',500);
+            exit();
+        }
+        $result = $newsModel->fomatDetail($pid);
+        if($result){
+            returnJsonInfo($result);
+        }else{
+            returnJsonErrorInfo('没有数据',500);
+        }
+    }
     /**
-     * @throws \think\exception\DbException
-     * @throws db\exception\DataNotFoundException
-     * @throws db\exception\ModelNotFoundException
+     * @param Request $request
      */
+    /*
+     * 单张图片上传
+     * */
     public function index_InfoAction(Request $request)
     {
         //获取banner图
@@ -67,17 +97,6 @@ class Index extends Controller
             unset($base64_url);
             returnJsonInfo($imgUrl);
         }
-//        $result = array();
-//        $banner_info = new bannerModel();
-//        $info = new indexModel();
-//        //获取首页banner
-//        $result['banner'] = $banner_info->getBanner(3);
-//        //获取首页type
-//        $result['type'] = DB::table('gdp_type')->order('id desc')->select();
-//        //获取首页信息
-//        $result['info'] = $info->getInfo();
-//
-//        returnJsonInfo($result);
     }
 
     function presonAi(Request $request)
