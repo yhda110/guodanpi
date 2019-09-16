@@ -1,7 +1,7 @@
 <template>
     <div class="aside" style="width:200px;">
         <div class="logo" style="height:60px;background:#002140;font-size:0;">
-            <img src="../../../public/img/logo.svg" alt=""><span class="cai">caimaomao</span>
+            <img src="../../../public/img/logo.svg" alt=""><span class="cai">果丹皮</span>
         </div>
         <el-menu
                 class="el-menu-vertical-demo"
