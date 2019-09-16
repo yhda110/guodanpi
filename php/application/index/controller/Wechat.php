@@ -9,11 +9,13 @@
  */
 namespace app\index\controller;
 use system\index\WXBizMsgCrypt;
+use system\userService\userService;
 use think\Request;
 use app\index\controller\WechatService;
 use app\index\model\wechatModel;
 use app\user\model\User;
 use app\index\model\ImgModel;
+use think\Loader;
 header("Content-type: text/html; charset=utf-8");
 class Wechat
 {
@@ -21,7 +23,8 @@ class Wechat
         0 => '成功',
         501=> 'openid插入失败',
         14000 => 'openid获取失败',
-        14001 => '用户信息获取失败'
+        14001 => '用户信息获取失败',
+        50000 => '用户已被封禁'
     );
     public function index()
     {
@@ -68,6 +71,8 @@ class Wechat
      */
     public function wechatLogin(Request $request)
     {
+        Loader::import('userService/userService',SYSTEM_PATH);
+        $userSerivce = new userService();
         $ip = $_SERVER["REMOTE_ADDR"];
         $user = array();
         $wechatService = new WeChatService();
@@ -76,23 +81,27 @@ class Wechat
         $state = trim($request->get('state', '/')); //携带参数 处理业务场景
         $data = $wechatService->getToken($code);        //获取access_token
         $data = $wechatService->refreshAccessToken($data['refresh_token']);   //刷新access_token
+        if(empty($data)){
+            redirect('https://www.lzjrys.store/wechat/login');
+            exit();
+        }
         $userinfo = $wechatService->getUserInfo($data['openid'], $data['access_token']);        //获取用户信息
         //  获取openid 查询是否存在用户
         $check_open = new wechatModel();
         $User = new User();
         $openid = $data['openid'];
         $check_open_data = $check_open->check_user("openid='$openid'");
+
         if(!empty($check_open_data)){
             //  存在openid 查询user表中是否有用户信息
             $userOpen = $check_open_data['id'];
             $userAccount = $User->getOne("openid=$userOpen");
             // 用户信息已存在
-
             $userAccount['pic_url'] = $imgModel->getUrlById($userAccount['pic_id'])['pic_url'];
             $user = $userAccount;
         }else{
             //  不存在openid
-
+            //TODO 重定向到refer地址 AUTH认证
             $insert = array();
             $insert['openid'] =$data['openid'];
             $id = $check_open->insert_open($insert);
@@ -118,7 +127,17 @@ class Wechat
                 returnJsonErrorInfo(self::$returnCode[501],501);
             }
         }
-         returnJsonInfo($user);
+        if($user['status'] == 0){
+            $userSerivce->doLogin($user);
+            if($state != ''){
+
+                redirect($state.'&is_login=1');
+            }else{
+                redirect('https://www.lzjrys.store&is_login=1');
+            }
+        }else{
+            returnJsonErrorInfo(self::$returnCode[50000],50000);
+        }
     }
 
 

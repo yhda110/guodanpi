@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{$__PUBLIC__}/js/jquery.min.js"></script>
+</head>
+<body>
+    <input id="img" name="img" type="file">
+<div class="send">提交</div>
+</body>
+<script>
+    $('.send').on('click',function () {
+        var formData = new FormData();
+
+        var formDatas = $("#img")[0].files[0];
+        formData.append('img',formDatas)
+        console.log(formData)
+        $.ajax({
+            url: 'https://www.lzjrys.store/indexInfo',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                console.log(returndata);
+            },
+            error: function (returndata) {
+                console.log(returndata);
+            }
+        });
+    })
+
+</script>
+</html>

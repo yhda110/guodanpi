@@ -23,6 +23,11 @@ class User extends Model
         $res = DB::table($this->table)->where($where)->find();
         return $res;
     }
+    function getUserByUser($user)
+    {
+        $res = DB::table($this->table)->where("user='$user'")->find();
+        return $res;
+    }
     function insertUser($data)
     {
         $res = DB::table($this->table)->insertGetId($data);
@@ -32,6 +37,12 @@ class User extends Model
     {
         $update_data =  $data;
         $res = DB::table($this->table)->where($where)->update($data);
+        return $res;
+    }
+
+    function fieldUser($field,$where)
+    {
+        $res = DB::table($this->table)->field($field)->where($where)->find();
         return $res;
     }
 }

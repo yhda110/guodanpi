@@ -9,7 +9,15 @@
 // | Author: 李子杰 <ansheng1021@163.com>
 // +----------------------------------------------------------------------
 use think\Route;
+//M站
 Route::rule('index',"index/Index/index");
+Route::rule('show',"index/Index/show");
+
+//新闻咨询
+Route::rule('news',"index/Index/news");
+Route::rule('news/detail',"index/Index/newsGetDetail");
+
+
 //微信登录
 Route::rule('wechat',"index/Wechat/index");
 Route::rule('wechat/login',"index/Wechat/login");
@@ -22,12 +30,21 @@ Route::rule('tag/deleteTag',"index/Tags/deleteTag");
 Route::rule('tag/updateTag',"index/Tags/updateTag");
 
 
-Route::rule('indexInfo',"index/Index/index_InfoAction");
+Route::rule('uploadImage',"index/Index/index_InfoAction");
 Route::rule('hello',"index/Index/test");
 Route::rule('userInfo',"user/Index/index");
 Route::rule('login',"user/Index/login");
 Route::rule('wechatLogin',"user/Index/wechat_login");
 Route::rule('wechatUrl',"index/Index/wechatUrl");
+
+
+//后台管理
+Route::rule('admin/login',"admin/Index/login");
+
+
+
+//人像识别
+Route::rule('aiperson/do',"index/Index/presonAi");
 
 //return [
 //    '__pattern__' => [
