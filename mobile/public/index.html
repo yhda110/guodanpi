@@ -4,11 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script type="text/javascript">
-        if (window.location.href.indexOf('code=') == -1) {
-          location.href = 'https://www.lzjrys.store//wechat/login?state=' + encodeURIComponent(window.location.href)
-            // window.localStorage.setItem('locationUrl', window.location.href)
-            // window.location.replace('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65fd96ce2196d7d7&redirect_uri=' + encodeURIComponent(window.location.href) + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect')
+        if (GetQueryString('type') === 'login') {
+          location.href = 'https://www.lzjrys.store/wechat/login?state=' + encodeURIComponent(window.location.href.split('?')[0])
         }
+        function GetQueryString(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null)
+              return decodeURI(r[2]);
+          return null;
+        }
+        console.log(document.cookie.split(';'))
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
@@ -24,3 +30,4 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+
