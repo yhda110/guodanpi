@@ -37,11 +37,8 @@ export default {
 			}],
 			message: '',
 			uploadData: {
-				title: '地中海风分享',
-				desc: `的撒发射点发随风倒十分
-士大夫大师傅
-士大夫的事发生范德萨范德萨范德萨发达省份的随风倒十分沙发地方；
-士大夫大师傅士大夫`,
+				title: 'sfsdafsdfdsf',
+				desc: `dsfsdfdsdfgdfgdfg`,
 				imgList: [
 					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
 					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
@@ -70,7 +67,7 @@ export default {
 		},
 		// 返回布尔值
     beforeRead(file) {
-      if (file.type !== 'image/jpeg') {
+      if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
         // Toast('请上传 jpg 格式图片')
         return false
       }
@@ -87,9 +84,46 @@ export default {
         }
       })
 		},
-		afterRead(file) {
+		async afterRead(file) {
 			console.log(file)
-			
+			let result = await this.$api('get', 'api/image/QiniuGetToken', {})
+			console.log(result.data)
+			let options = {
+				// quality: 0.92,
+				// noCompressIfLarger: true
+				// maxWidth: 1000,
+				// maxHeight: 618
+			}
+			var putExtra = { 
+				// fname: "",
+				// params: {},
+				// mimeType: [] || null
+			}
+			var config = {
+				// useCdnDomain: true,
+				// region: qiniu.region.z2
+			}
+			var observer = {
+				// next(res){
+				// 	console.log(res)
+				// 	// ...
+				// },
+				error(err){
+					console.log(err)
+					// ...
+				},
+				complete(res){
+					console.log(res)
+					// ...
+				}
+			}
+			console.log(file)
+			this.$qiniu.compressImage(file.file, options).then(data => {
+				console.log(data)
+				var observable = this.$qiniu.upload(data.dist, '123.jpg', result.data, putExtra, config)
+				console.log(observable)
+				observable.subscribe(observer) // 上传开始
+			})
 		}
 	}
 }

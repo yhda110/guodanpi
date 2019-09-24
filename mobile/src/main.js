@@ -7,10 +7,22 @@ import App from './App.vue'
 import qs from 'qs'
 import Axios from 'axios'
 import Vant from 'vant'
+import * as qiniu from 'qiniu-js'
 import 'vant/lib/index.css'
 
 Vue.prototype.$http = Axios
 Vue.prototype.$qs = qs
+Vue.prototype.$qiniu = qiniu
+
+Vue.prototype.$api = function (type, url, data) {
+  return new Promise((resolve, reject) => {
+    Axios[type](url,data).then(data => {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
 
 Vue.use(VueRouter)
 Vue.use(Vant)

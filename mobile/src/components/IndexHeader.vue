@@ -37,15 +37,7 @@ export default {
 				{name: '最新', routerLink: 'home'},
 				{name: '工装', routerLink: 'news'},
 				{name: '家装', routerLink: '/1'},
-				{name: '展会', routerLink: '/2'},
-				{name: '娱乐', routerLink: '/3'},
-				{name: '军事', routerLink: '/4'},
-				{name: '科技', routerLink: '/5'},
-				{name: '汽车', routerLink: '/6'},
-				{name: '房产', routerLink: '/7'},
-				{name: '家居', routerLink: '/8'},
-				{name: '体育', routerLink: '/9'},
-				{name: '财经', routerLink: '/0'},
+				{name: '展会', routerLink: '/2'}
 			]
 		}
 	},
