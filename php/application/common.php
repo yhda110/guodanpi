@@ -87,27 +87,12 @@ function nonceStr() {
     }
     return $str;
 }
-function base64_image_content($base64_image_content,$path){
-    //匹配出图片的格式
-    if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
-        $type = $result[2];
-        $new_file = $path."/".date('Ymd',time())."/";
-        if(!file_exists($new_file)){
-            //检查是否有该文件夹，如果没有就创建，并给予最高权限
-//            mkdir($new_file, 0700);
-            echo json_encode($new_file);
-        }
-        $new_file = $new_file.time().".{$type}";
-        if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
-            return '/'.$new_file;
-        }else{
-            return false;
-        }
-    }else{
-        return false;
-    }
-}
 
+/**
+ * 图片保存至本地
+ * @param $baseurl
+ * @return array
+ */
 function uploads($baseurl){
     $logo_data = $baseurl;
     //$logo_data = $_POST['logo_base64'];
@@ -139,6 +124,15 @@ function uploads($baseurl){
     }
     return $result;
 }
+
+/**
+ * @param $string
+ * @param string $operation
+ * @param string $key
+ * @param int $expiry
+ * @return bool|string
+ * cookie加密解密
+ */
 function authcode($string, $operation = 'DECODE', $key = 'encrypt', $expiry = 0)
 
 {
@@ -155,9 +149,6 @@ function authcode($string, $operation = 'DECODE', $key = 'encrypt', $expiry = 0)
     // 参与运算的密匙
     $cryptkey = $keya . md5($keya . $keyc);
     $key_length = strlen($cryptkey);
-    // 明文，前10位用来保存时间戳，解密时验证数据有效性，10到26位用来保存$keyb(密匙b)，
-    //解密时会通过这个密匙验证数据完整性
-    // 如果是解码的话，会从第$ckey_length位开始，因为密文前$ckey_length位保存 动态密匙，以保证解密正确
     $string = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) :
         sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
     $string_length = strlen($string);
@@ -200,6 +191,7 @@ function authcode($string, $operation = 'DECODE', $key = 'encrypt', $expiry = 0)
         return $keyc . str_replace('=', '', base64_encode($result));
     }
 }
+//获取当前url
 function get_current_url()
 {
     $url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?");

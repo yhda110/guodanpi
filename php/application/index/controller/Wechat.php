@@ -131,9 +131,9 @@ class Wechat
             $userSerivce->doLogin($user);
             if($state != ''){
 
-                redirect($state.'&is_login=1');
+                redirect($state.'&type=isLogin');
             }else{
-                redirect('https://www.lzjrys.store&is_login=1');
+                redirect('https://www.lzjrys.store&type=isLogin');
             }
         }else{
             returnJsonErrorInfo(self::$returnCode[50000],50000);

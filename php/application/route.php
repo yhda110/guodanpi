@@ -12,6 +12,8 @@ use think\Route;
 //M站
 Route::rule('index',"index/Index/index");
 Route::rule('show',"index/Index/show");
+//帖子上传
+Route::rule('thread/upload',"index/Index/thread_upload");
 
 //新闻咨询
 Route::rule('news',"index/Index/news");
@@ -28,6 +30,9 @@ Route::rule('tag/getAll',"index/Tags/getAllTag");
 Route::rule('tag/insertTag',"index/Tags/insertTag");
 Route::rule('tag/deleteTag',"index/Tags/deleteTag");
 Route::rule('tag/updateTag',"index/Tags/updateTag");
+
+//七牛token
+Route::rule('Image/QiniuGetToken',"index/Index/QiniuGetToken");
 
 
 Route::rule('uploadImage',"index/Index/index_InfoAction");

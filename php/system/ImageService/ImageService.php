@@ -6,7 +6,9 @@
  * @Date: 2019/9/5
  * @Time: 11:13
  */
+
 namespace system\ImageService;
+
 use Qiniu\Auth as Auth;
 use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
@@ -19,14 +21,32 @@ const Secret_Key = 'zzCOjCMrjUrN1uQ6yvOgyNK01LpRAfUlwngjF963';
 //define('Secret_Key','zzCOjCMrjUrN1uQ6yvOgyNK01LpRAfUlwngjF963');
 class ImageService extends Controller
 {
-    public function _initialize(){
+    public function _initialize()
+    {
 
     }
+
+    public function QiniuGetToken()
+    {
+        require_once APP_PATH . '../vendor/qiniu/php-sdk/autoload.php';
+//        $accessKeys = Access_Key;
+//        $secretKeys = Secret_Key;
+        $auth = new Auth(Access_Key, Secret_Key);
+        $bucket = 'gdp';
+        $domain = 'lzjrys.store';
+        $token = $auth->uploadToken($bucket);
+        $result = array(
+            'token' => $token,
+            'domain' => $domain
+        );
+        return $result;
+    }
+
     public function uploadImg($base64_url)
     {
         $ImgModel = new ImgModel();
-        $imageSave = uploads('data:image/png;base64,'.$base64_url);
-        if(!$imageSave){
+        $imageSave = uploads('data:image/png;base64,' . $base64_url);
+        if (!$imageSave) {
             return false;
             exit();
         }
@@ -37,11 +57,11 @@ class ImageService extends Controller
         $ext = pathinfo($filePath, PATHINFO_EXTENSION);
         // $controllerName=$this->getContro();
 //        // 上传到七牛后保存的文件名
-        $key =substr(md5($filePath) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
-        require_once  APP_PATH.'../vendor/qiniu/php-sdk/autoload.php';
+        $key = substr(md5($filePath), 0, 5) . date('YmdHis') . rand(0, 9999) . '.' . $ext;
+        require_once APP_PATH . '../vendor/qiniu/php-sdk/autoload.php';
 //        $accessKeys = Access_Key;
 //        $secretKeys = Secret_Key;
-        $auth = new Auth(Access_Key,Secret_Key);
+        $auth = new Auth(Access_Key, Secret_Key);
         $bucket = 'gdp';
         $domain = 'pxjwk309w.bkt.clouddn.com';
         $token = $auth->uploadToken($bucket);
@@ -50,12 +70,12 @@ class ImageService extends Controller
         if ($err !== null) {
             return false;
         } else {
-            $id = $ImgModel->insertImgByUrl($domain.'/'.$ret['key']);
+            $id = $ImgModel->insertImgByUrl($domain . '/' . $ret['key']);
             unlink($filePath);
-            if($id>0){
-                return $domain.'/'.$ret['key'];
-            }else{
-                return $domain.'/'.$ret['key'];
+            if ($id > 0) {
+                return $domain . '/' . $ret['key'];
+            } else {
+                return $domain . '/' . $ret['key'];
             }
         }
 
