@@ -9,9 +9,9 @@
 			@click-right="onClickRight"
 		/>
 		<div class="content_wrap">
-			<van-field placeholder="请输入标题" maxlength="500" />
+			<van-field v-model="uploadData.title" placeholder="请输入标题" maxlength="500" />
 			<van-field
-				v-model="message"
+				v-model="uploadData.desc"
 				label="描述"
 				type="textarea"
 				placeholder="请输入留言"
@@ -27,6 +27,7 @@
 </template>
 <script>
 import {mapState, mapActions} from 'vuex'
+import md5 from 'md5'
 // import { Toast } from 'vant'
 export default {
 	data() {
@@ -35,18 +36,12 @@ export default {
 				url: 'https://img.yzcdn.cn/vant/cat.jpeg',
 				isImage: true
 			}],
-			message: '',
 			uploadData: {
-				title: 'sfsdafsdfdsf',
-				desc: `dsfsdfdsdfgdfgdfg`,
-				imgList: [
-					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
-					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
-					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
-					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
-					'data:image/jpeg;base64,/9j/4RFiRXhpZgAATU0AKg',
-				]
-			}
+				title: '',
+				desc: '',
+				imgList: []
+			},
+			options: {}
 		}
 	},
 	computed: {
@@ -66,64 +61,76 @@ export default {
 
 		},
 		// 返回布尔值
-    beforeRead(file) {
+    async beforeRead(file) {
+			// let _this = this
+
       if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
-        // Toast('请上传 jpg 格式图片')
+				this.$Toast.fail({
+					message: '请上传 jpg / png 格式图片'
+				})
         return false
-      }
-      return true
-    },
-    // 返回 Promise
-    asyncBeforeRead(file) {
-      return new Promise((resolve, reject) => {
-        if (file.type !== 'image/jpeg') {
-          // Toast('请上传 jpg 格式图片')
-          reject()
-        } else {
-          resolve()
-        }
-      })
-		},
-		async afterRead(file) {
-			console.log(file)
+			}
+
+			this.$Toast.loading({
+				mask: true,
+				message: '图片上传中...',
+				duration: 0
+			})
 			let result = await this.$api('get', 'api/image/QiniuGetToken', {})
-			console.log(result.data)
-			let options = {
-				// quality: 0.92,
-				// noCompressIfLarger: true
-				// maxWidth: 1000,
-				// maxHeight: 618
-			}
-			var putExtra = { 
-				// fname: "",
-				// params: {},
-				// mimeType: [] || null
-			}
-			var config = {
-				// useCdnDomain: true,
-				// region: qiniu.region.z2
-			}
 			var observer = {
-				// next(res){
-				// 	console.log(res)
-				// 	// ...
-				// },
 				error(err){
 					console.log(err)
-					// ...
 				},
-				complete(res){
-					console.log(res)
-					// ...
+				complete(){
+					_this.$Toast.clear({
+						clearAll: true
+					})
+			
 				}
 			}
-			console.log(file)
-			this.$qiniu.compressImage(file.file, options).then(data => {
-				console.log(data)
-				var observable = this.$qiniu.upload(data.dist, '123.jpg', result.data, putExtra, config)
-				console.log(observable)
+			this.$qiniu.compressImage(file, this.options).then(data => {
+				let key = `${md5(new Date().getTime() + file.name)}.${file.type.split('/')[1]}`
+				var observable = this.$qiniu.upload(data.dist, key, result.data.data.token)
 				observable.subscribe(observer) // 上传开始
 			})
+
+			return true
+    },
+    // 返回 Promise
+    // asyncBeforeRead(file) {
+    //   return new Promise((resolve, reject) => {
+    //     if (file.type !== 'image/jpeg') {
+		// 			reject()
+		// 			return false
+    //     }
+    //   })
+		// },
+		async afterRead() {
+			// let _this = this
+			// this.$Toast.loading({
+			// 	mask: true,
+			// 	message: '图片上传中...',
+			// 	duration: 0
+			// })
+
+			// let result = await this.$api('get', 'api/image/QiniuGetToken', {})
+			// let options = {}
+			// var observer = {
+			// 	error(err){
+			// 		console.log(err)
+			// 	},
+			// 	complete(res){
+			// 		_this.$Toast.clear({
+			// 			clearAll: true
+			// 		})
+			// 		_this.uploadData.imgList.push(`${result.data.data.domain}/${res.key}`)
+			// 	}
+			// }
+			// this.$qiniu.compressImage(file.file, options).then(data => {
+			// 	let key = `${md5(new Date().getTime() + file.file.name)}.${file.file.type.split('/')[1]}`
+			// 	var observable = this.$qiniu.upload(data.dist, key, result.data.data.token)
+			// 	observable.subscribe(observer) // 上传开始
+			// })
 		}
 	}
 }
