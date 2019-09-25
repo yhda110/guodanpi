@@ -11,7 +11,7 @@
 		<div class="content_wrap">
 			<van-field v-model="uploadData.title" placeholder="请输入标题" maxlength="500" />
 			<van-field
-				v-model="uploadData.desc"
+				v-model="uploadData.content"
 				label="描述"
 				type="textarea"
 				placeholder="请输入描述（可不填）"
@@ -20,10 +20,11 @@
 			<van-uploader 
 				:before-read="beforeRead" 
 				:after-read="afterRead"
-				@delete="fileDelete"
+				:before-delete="fileDelete"
 				v-model="fileList"
 				:max-count="6"
 				:max-size="5000000"
+				:delete="false"
 				multiple/>
 		</div>
 	</div>
@@ -31,15 +32,14 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import md5 from 'md5'
-// import { Toast } from 'vant'
 export default {
 	data() {
 		return {
 			fileList: [],
 			uploadData: {
 				title: '',
-				desc: '',
-				imgList: []
+				content: '',
+				imglist: []
 			},
 			options: {}
 		}
@@ -48,8 +48,7 @@ export default {
 		...mapState(['headerShow'])
 	},
 	mounted() {
-		// Toast('xxxxxxxxxxxxxx')
-		this.setState({key:'indexHeaderSHow',  value:false})
+		this.setState({key:'indexHeaderSHow', value:false})
 	},
 	methods: {
 		...mapActions(['setState']),
@@ -59,17 +58,23 @@ export default {
 		onClickRight() {
 			this.submit()
 		},
+		// async beforeRead(file) {
+    //   if (file.type !== 'image/jpeg') {
+    //     // Toast('请上传 jpg 格式图片');
+    //     return false;
+    //   }
+    //   return true;
+    // },
 		// 返回布尔值
-    async beforeRead(file) {
-			let _this = this
-
+		beforeRead(file) {
       if (!(file.type === 'image/jpeg' || file.type === 'image/png')) {
-				this.$Toast.fail({
-					message: '请上传 jpg / png 格式图片'
-				})
+				this.$Toast.fail({message: '请上传 jpg / png 格式图片'})
         return false
 			}
-
+			return true
+		},
+		async afterRead({file}) {
+			let _this = this
 			this.$Toast.loading({
 				mask: true,
 				message: '图片上传中...',
@@ -83,6 +88,8 @@ export default {
 					observable.subscribe({
 							error(err){
 								console.log(err)
+								_this.fileList.pop()
+								_this.$Toast.fail({message: '上传失败'})
 								reject(err)
 							},
 							complete(res){
@@ -90,27 +97,37 @@ export default {
 									clearAll: true
 								})
 								let url = `${result.data.data.domain}/${res.key}`
-								_this.uploadData.imgList.push(url)
+								_this.uploadData.imglist.push(url)
 								resolve()
 							}
 						}) // 上传开始
 				})
 			})
-			return true
 		},
-		fileDelete(file) {
+		fileDelete(file,detail) {
 			console.log(file)
+			console.log(detail)
+			return false
 		},
-		afterRead() {},
 		// 上传发帖
-		submit() {
+		async submit() {
 			// 检测完整性
-			console.log(this.fileList)
-			// console.log(this.uploadData.desc)
-			console.log(this.uploadData.title)
 			if(!this.uploadData.title) {
 				this.$Toast.fail({message: '请填写标题'})
 				return false
+			}else if(this.uploadData.imglist.length === 0) {
+				this.$Toast.fail({message: '请插入图片'})
+				return false
+			}
+			let reqData = {...this.uploadData, userid: '6'}
+			reqData.imglist = reqData.imglist.join()
+			let result = await this.$api('post', 'api/thread/upload', reqData)	
+			console.log(result)
+			if(result.data.code === 0){
+				this.$Toast.success({message: '发布成功，请耐心等待审核'})
+				setTimeout(() => {
+					this.$router.push('/')
+				}, 500);
 			}
 		}
 	}
