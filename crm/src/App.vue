@@ -1,27 +1,36 @@
 <template>
-  <div id="app">
-    <!--<img alt="Vue logo" src="./assets/logo.png">-->
-    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <!--<home></home>-->
-    <router-view></router-view>
-  </div>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Vuetify</span>
+        <span class="font-weight-light">MATERIAL DESIGN</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        text
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+      >
+        <span class="mr-2">Latest Release</span>
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <HelloWorld/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-// import Home from './components/layout/Home.vue'
-export default {
-  name: 'app',
-  components: {
-    // HelloWorld
-    //  Home
-  }
-}
-</script>
+import HelloWorld from './components/HelloWorld';
 
-<style>
-#app{
-  width:100%;
-  height:100%;
-}
-</style>
+export default {
+  name: 'App',
+  components: {
+    HelloWorld,
+  },
+  data: () => ({
+    //
+  }),
+};
+</script>

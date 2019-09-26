@@ -22,7 +22,7 @@
 				:after-read="afterRead"
 				:before-delete="fileDelete"
 				v-model="fileList"
-				:max-count="6"
+				:max-count="8"
 				:max-size="5000000"
 				:delete="false"
 				multiple/>
@@ -37,8 +37,8 @@ export default {
 		return {
 			fileList: [],
 			uploadData: {
-				title: '',
-				content: '',
+				title: '测试',
+				content: '我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容',
 				imglist: []
 			},
 			options: {}
@@ -122,7 +122,6 @@ export default {
 			let reqData = {...this.uploadData, userid: '6'}
 			reqData.imglist = reqData.imglist.join()
 			let result = await this.$api('post', 'api/thread/upload', reqData)	
-			console.log(result)
 			if(result.data.code === 0){
 				this.$Toast.success({message: '发布成功，请耐心等待审核'})
 				setTimeout(() => {
