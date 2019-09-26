@@ -30,13 +30,14 @@ class Index extends Controller
     public $userId;
     public $ImgModel;
     static $errorResult = array(
-        501 =>'未登录',
+        501 => '未登录',
         10000 => '标题不能为空',
         10001 => '内容不能为空',
         10002 => '上传文字违法',
         10003 => '上传图片违法',
         10004 => '用户不存在',
-        11000 => '上传失败'
+        11000 => '上传失败',
+        11001 => '操作失败'
     );
 
     public function __construct(Request $request = null)
@@ -55,12 +56,6 @@ class Index extends Controller
             $current_url = get_current_url();
             redirect('/wechat/login?state=' . $current_url);
         }
-        $this->assign('__PUBLIC__', '/static');
-        return $this->fetch();
-    }
-
-    public function show()
-    {
         $this->assign('__PUBLIC__', '/static');
         return $this->fetch();
     }
@@ -124,60 +119,6 @@ class Index extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * 帖子上传
-     */
-    public function thread_upload(Request $request)
-    {
-        if (!Request::instance()->isPost()) exit();
-        $userid = $this->userId;
-        $param = $request->param();
-        if(!$userid){
-            $userid = $request->param('userid',0);
-            if($userid == 0){
-                returnJsonErrorInfo(self::$errorResult[501],501);exit();
-            }
-        }
-        //校验用户信息
-        $UserModel = new User();
-        $userInfo = $UserModel->getOne("id=$userid");
-        if(empty($userInfo)){
-            returnJsonErrorInfo(self::$errorResult[10004],10004);exit();
-        }
-        $threadModel = new threadModel();
-        if (!$param['title']) {
-            returnJsonErrorInfo(self::$errorResult[10000], 10000);
-            exit();
-        }
-        if (!$param['content']) {
-            returnJsonErrorInfo(self::$errorResult[10001], 10001);
-            exit();
-        }
-       // TODO 需要添加type验证
-
-        if ($param['imglist']) {
-            $pic_list = '';
-            $param['imglist'] = json_decode($param['imglist'],true);
-            for ($i = 0; $i < count($param['imglist']); $i++) {
-                $pic_id = $this->ImgModel->insertImgByUrl($param['imglist'][$i]);
-                $pic_list = $pic_id.','.$pic_list;
-            }
-            $pic_list =  substr($pic_list,0,strlen($pic_list)-1);
-        }
-
-        $insertParam = array(
-            'type' => $request->param('type',0),
-            'userid' => $userid,
-            'title' => $param['title'],
-            'content' => $param['content'],
-            'img_list'=>$pic_list
-        );
-        $insertId = $threadModel->uploadThread($insertParam);
-        if($insertId>0){
-            returnJsonInfo(array('id'=>$insertId));
-        }
-    }
 
     function presonAi(Request $request)
     {
