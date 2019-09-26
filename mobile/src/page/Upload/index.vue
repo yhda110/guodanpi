@@ -85,9 +85,7 @@ export default {
       })
 		},
 		async afterRead(file) {
-			console.log(file)
 			let result = await this.$api('get', 'api/image/QiniuGetToken', {})
-			console.log(result.data)
 			let options = {
 				// quality: 0.92,
 				// noCompressIfLarger: true
@@ -109,19 +107,16 @@ export default {
 				// 	// ...
 				// },
 				error(err){
-					console.log(err)
+				    console.log('测试')
 					// ...
 				},
 				complete(res){
-					console.log(res)
 					// ...
 				}
 			}
-			console.log(file)
 			this.$qiniu.compressImage(file.file, options).then(data => {
-				console.log(data)
-				var observable = this.$qiniu.upload(data.dist, '123.jpg', result.data, putExtra, config)
-				console.log(observable)
+			    console.log(1)
+				var observable = this.$qiniu.upload(data.dist, '12a3.jpg', result.data, putExtra, config)
 				observable.subscribe(observer) // 上传开始
 			})
 		}

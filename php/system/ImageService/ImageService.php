@@ -33,7 +33,7 @@ class ImageService extends Controller
 //        $secretKeys = Secret_Key;
         $auth = new Auth(Access_Key, Secret_Key);
         $bucket = 'gdp';
-        $domain = 'lzjrys.store';
+        $domain = 'https://lzjrys.store';
         $token = $auth->uploadToken($bucket);
         $result = array(
             'token' => $token,

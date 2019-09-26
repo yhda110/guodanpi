@@ -11,7 +11,6 @@ namespace app\index\controller;
 use system\index\WXBizMsgCrypt;
 use system\userService\userService;
 use think\Request;
-use app\index\controller\WechatService;
 use app\index\model\wechatModel;
 use app\user\model\User;
 use app\index\model\ImgModel;
@@ -60,6 +59,7 @@ class Wechat
      */
     public function login(Request $request)
     {
+        Loader::import('WechatService/WechatService',SYSTEM_PATH);
         $state = trim($request->get('state',''));
         $weixinService = new WechatService();
         $codeUrl = $weixinService->getCodeUrl($state);
@@ -72,6 +72,7 @@ class Wechat
     public function wechatLogin(Request $request)
     {
         Loader::import('userService/userService',SYSTEM_PATH);
+        Loader::import('WechatService/WechatService',SYSTEM_PATH);
         $userSerivce = new userService();
         $ip = $_SERVER["REMOTE_ADDR"];
         $user = array();

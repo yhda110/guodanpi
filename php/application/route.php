@@ -13,7 +13,10 @@ use think\Route;
 Route::rule('index',"index/Index/index");
 Route::rule('show',"index/Index/show");
 //帖子上传
-Route::rule('thread/upload',"index/Index/thread_upload");
+
+Route::rule('thread/getThread',"index/Thread/getThread");
+Route::rule('thread/upload',"index/Thread/threadUpload");
+Route::rule('thread/publishThread',"index/Thread/publishThread");
 
 //新闻咨询
 Route::rule('news',"index/Index/news");
