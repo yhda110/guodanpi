@@ -73,43 +73,6 @@ export default {
 			}
 			return true
 		},
-<<<<<<< HEAD
-		async afterRead(file) {
-			let result = await this.$api('get', 'api/image/QiniuGetToken', {})
-			let options = {
-				// quality: 0.92,
-				// noCompressIfLarger: true
-				// maxWidth: 1000,
-				// maxHeight: 618
-			}
-			var putExtra = { 
-				// fname: "",
-				// params: {},
-				// mimeType: [] || null
-			}
-			var config = {
-				// useCdnDomain: true,
-				// region: qiniu.region.z2
-			}
-			var observer = {
-				// next(res){
-				// 	console.log(res)
-				// 	// ...
-				// },
-				error(err){
-				    console.log('测试')
-					// ...
-				},
-				complete(res){
-					// ...
-				}
-			}
-			this.$qiniu.compressImage(file.file, options).then(data => {
-			    console.log(1)
-				var observable = this.$qiniu.upload(data.dist, '12a3.jpg', result.data, putExtra, config)
-				observable.subscribe(observer) // 上传开始
-			})
-=======
 		async afterRead({file}) {
 			let _this = this
 			this.$Toast.loading({
@@ -165,7 +128,6 @@ export default {
 					this.$router.push('/')
 				}, 500);
 			}
->>>>>>> 777bbb54b85b3af282904cb74cf66126da246ca8
 		}
 	}
 }
