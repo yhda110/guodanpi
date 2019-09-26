@@ -33,3 +33,6 @@ body{
 }
 .list-page{background-color: #fff}
 .content_wrap{margin: .266667rem;}
+
+@import 'variables';
+@import '~vuetify-scss';
