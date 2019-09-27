@@ -18,7 +18,6 @@ Vue.prototype.$qs = qs
 Vue.prototype.$qiniu = qiniu
 Vue.prototype.$Toast = Toast
 
-Axios.defaults.baseURL = '/api/'
 Vue.prototype.$api = function (type, url, data) {
   return new Promise((resolve, reject) => {
     Axios[type](url,data).then(data => {
