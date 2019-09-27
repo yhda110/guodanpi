@@ -80,7 +80,7 @@ export default {
 				message: '图片上传中...',
 				duration: 0
 			})
-			let result = await this.$api('get', '/image/QiniuGetToken', {})
+			let result = await this.$api('get', '/api/image/QiniuGetToken', {})
 			await new Promise((resolve, reject) => {
 				this.$qiniu.compressImage(file, this.options).then(data => {
 					let key = `${md5(new Date().getTime() + file.name)}.${file.type.split('/')[1]}`
@@ -121,7 +121,7 @@ export default {
 			}
 			let reqData = {...this.uploadData, userid: '6'}
 			reqData.imglist = reqData.imglist.join()
-			let result = await this.$api('post', '/thread/upload', reqData)	
+			let result = await this.$api('post', '/api/thread/upload', reqData)	
 			if(result.data.code === 0){
 				this.$Toast.success({message: '发布成功，请耐心等待审核'})
 				setTimeout(() => {
