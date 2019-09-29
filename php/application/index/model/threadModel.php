@@ -78,5 +78,9 @@ class threadModel extends Model
         }
         return false;
     }
-
+    function getOneThread($id)
+    {
+        $res = DB::table($this->table)->where("id=$id and is_del=0 and is_published=1")->find();
+        return $res;
+    }
 }

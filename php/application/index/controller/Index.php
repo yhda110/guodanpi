@@ -9,36 +9,23 @@
 
 namespace app\index\controller;
 
-use app\index\model\threadModel;
-use app\user\model\User;
 use system\ImageService\ImageService;
 use system\userService\userService;
 use think\Controller;
-use think\db;
 use think\Loader;
 use app\index\model\ImgModel;
 use think\Request;
 use app\index\model\newsModel;
 
-require '../vendor/autoload.php';
+//require '../vendor/autoload.php';
 header("Content-type: text/html; charset=utf-8");
-const APP_ID = '17207036';
-const API_KEY = 'WpCGiK8IXmffOlqBFIv0Bp5T';
-const SECRET_KEY = 'YXS29TjHMNHtwb8bWN6ssYGoIt8CamsY';
+//const APP_ID = '17207036';
+//const API_KEY = 'WpCGiK8IXmffOlqBFIv0Bp5T';
+//const SECRET_KEY = 'YXS29TjHMNHtwb8bWN6ssYGoIt8CamsY';
 class Index extends Controller
 {
     public $userId;
     public $ImgModel;
-    static $errorResult = array(
-        501 => '未登录',
-        10000 => '标题不能为空',
-        10001 => '内容不能为空',
-        10002 => '上传文字违法',
-        10003 => '上传图片违法',
-        10004 => '用户不存在',
-        11000 => '上传失败',
-        11001 => '操作失败'
-    );
 
     public function __construct(Request $request = null)
     {
@@ -155,6 +142,7 @@ class Index extends Controller
             echo 'error';
         }
     }
+
 
 }
 

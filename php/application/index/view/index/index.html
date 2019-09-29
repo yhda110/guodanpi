@@ -3,23 +3,34 @@
 <head>
     <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <script>if (GetQueryString('type') === 'login') {
+        location.href = 'https://www.lzjrys.store/wechat/login?state=' + encodeURIComponent(window.location.href.split('?')[0])
+    }
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return decodeURI(r[2]);
+        return null;
+    }</script>
     <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link rel=icon href={$__PUBLIC__}/favicon.ico>
+    <link rel=icon href=/favicon.ico>
     <link rel=stylesheet href={$__PUBLIC__}/css/index.css>
     <script src=http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js></script>
     <title>guodanpi</title>
-    <link href={$__PUBLIC__}/css/app.1428881b.css rel=preload as=style>
+    <link href={$__PUBLIC__}/css/app.a63dc857.css rel=preload as=style>
     <link href={$__PUBLIC__}/css/chunk-vendors.358de8bd.css rel=preload as=style>
-    <link href={$__PUBLIC__}/js/app.cc6e481d.js rel=preload as=script>
-    <link href={$__PUBLIC__}/js/chunk-vendors.fee4e6fd.js rel=preload as=script>
+    <link href={$__PUBLIC__}/js/app.94d16363.js rel=preload as=script>
+    <link href={$__PUBLIC__}/js/chunk-vendors.4fa4cbcb.js rel=preload as=script>
     <link href={$__PUBLIC__}/css/chunk-vendors.358de8bd.css rel=stylesheet>
-    <link href={$__PUBLIC__}/css/app.1428881b.css rel=stylesheet>
+    <link href={$__PUBLIC__}/css/app.a63dc857.css rel=stylesheet>
 </head>
 <body class=list-page>
 <noscript><strong>We're sorry but guodanpi doesn't work properly without JavaScript enabled. Please enable it to
     continue.</strong></noscript>
 <div id=app></div>
-<script src={$__PUBLIC__}/js/chunk-vendors.fee4e6fd.js></script>
-<script src={$__PUBLIC__}/js/app.cc6e481d.js></script>
+<script src={$__PUBLIC__}/js/chunk-vendors.4fa4cbcb.js></script>
+<script src={$__PUBLIC__}/js/app.94d16363.js></script>
 </body>
 </html>

@@ -17,13 +17,18 @@ class newsModel extends Model
     {
         $res = array();
         $res['count'] = count(Db::table($this->table)->select());
-        $res['data'] = DB::table($this->table)->order('id asc')->limit($offset,$limit)->select();
+        $res['data'] = DB::table($this->table)
+            ->order('id asc')
+            ->limit($offset,$limit)
+            ->select();
         return $res;
     }
     function fomatDetail($pid)
     {
         $html = array();
-        $html['html'] = DB::table('gdp_sp_detail')->where("pid='$pid'")->value('html');
+        $html['html'] = DB::table('gdp_sp_detail')
+            ->where("pid='$pid'")
+            ->value('html');
         return $html;
     }
 

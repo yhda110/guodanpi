@@ -70,6 +70,11 @@ class Index
         $info = $user->updateUser('id=1',$data);
         echo json_encode($info);
     }
+    /*
+     * 微信小程序登录接口
+     * 需要传入code,iv,encryptedData
+     * GET请求
+     * */
     public function wechat_login(Request $request){
         $code = $request->param('code');
         $iv = $request->param('iv');
@@ -87,6 +92,13 @@ class Index
         }
         $this->checkOpenID($wechat_info,$iv,$encryptedData);
     }
+    /*
+     * check用户openid
+     * 通过微信提供的工具类解密iv和encryptedData获取用户的个人信息
+     * 判断openid是否存在
+     * 存在则更新数据库用户信息
+     * 不存在则创建新用户
+     * */
     private function checkOpenID($wechat,$iv,$encryptedData)
     {
         require_once(ROOT_PATH."system/wxBizDataCrypt.php");
@@ -154,7 +166,7 @@ class Index
             return $access_token;
         }
     }
-    function get_by_curl($url,$post = false){
+    private function get_by_curl($url,$post = false){
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
