@@ -63,6 +63,7 @@ class Thread extends Controller
             returnJsonErrorInfo('帖子不存在',500);exit();
         }
         Loader::import('RedisService/RedisService', SYSTEM_PATH);
+        //获取pv
         $redis = new RedisService();
         $pv = $redis->getRedis(config('Redis.thread').$thread_id)+1;
         $redis->setRedis(config('Redis.thread').$thread_id,$pv);
@@ -104,14 +105,17 @@ class Thread extends Controller
         foreach ($info as $key => $item) {
             $pic_id = explode(',', $item['img_list']);
             $pic_img = [];
+            //获取pv
             $thread_pv = $redis->getRedis(config("Redis.thread") . $item['id']);
             if (!$thread_pv) {
                 $redis->setRedis(config("Redis.thread") . $item['id'], 0);
             }
             $info[$key]['pv'] = $redis->getRedis(config("Redis.thread") . $item['id']);
+            //获取图片url
             for ($i = 0; $i < count($pic_id); $i++) {
                 $pic_img[$i] = $ImgModel->getUrlById($pic_id[$i])['pic_url'];
             }
+            //格式化帖子状态
             if ($item['is_published'] == 0) {
                 $info[$key]['is_published_text'] = '等待审核';
             } else if ($item['is_published'] == 1) {
@@ -131,6 +135,8 @@ class Thread extends Controller
 
     /**
      * 更改帖子状态 包含删除
+     * is_del = 1 删除帖子
+     * state = 0 等待审核  = 1 审核通过  = 2 审核被拒
      */
     public function publishThread(Request $request)
     {
@@ -194,7 +200,6 @@ class Thread extends Controller
             returnJsonErrorInfo(self::$errorResult[10001], 10001);
             exit();
         }
-        // TODO 需要添加type验证
 
         if ($param['imglist']) {
             $pic_list = '';
@@ -205,6 +210,7 @@ class Thread extends Controller
             }
             $pic_list = substr($pic_list, 0, strlen($pic_list) - 1);
         }
+        // TODO 需要添加类型
 
         $insertParam = array(
             'type' => $request->param('type', 0),
