@@ -13,14 +13,14 @@ use think\Route;
 Route::rule('index',"index/Index/index");
 Route::rule('show',"index/Index/show");
 //帖子上传
-
-Route::rule('thread/getThread',"index/Thread/getThread");
-Route::rule('thread/upload',"index/Thread/threadUpload");
-Route::rule('thread/publishThread',"index/Thread/publishThread");
+Route::rule('api/thread/getThread',"index/Thread/getThread");
+Route::rule('api/thread/getOneThread',"index/Thread/getOneThread");
+Route::rule('api/thread/upload',"index/Thread/threadUpload");
+Route::rule('api/thread/publishThread',"index/Thread/publishThread");
 
 //新闻咨询
-Route::rule('news',"index/Index/news");
-Route::rule('news/detail',"index/Index/newsGetDetail");
+Route::rule('api/news',"index/Index/news");
+Route::rule('api/news/detail',"index/Index/newsGetDetail");
 
 
 //微信登录
@@ -29,30 +29,30 @@ Route::rule('wechat/login',"index/Wechat/login");
 Route::rule('wechat/wechatLogin',"index/Wechat/wechatLogin");
 
 //标签路由
-Route::rule('tag/getAll',"index/Tags/getAllTag");
-Route::rule('tag/insertTag',"index/Tags/insertTag");
-Route::rule('tag/deleteTag',"index/Tags/deleteTag");
-Route::rule('tag/updateTag',"index/Tags/updateTag");
+Route::rule('api/tag/getAll',"index/Tags/getAllTag");
+Route::rule('api/tag/insertTag',"index/Tags/insertTag");
+Route::rule('api/tag/deleteTag',"index/Tags/deleteTag");
+Route::rule('api/tag/updateTag',"index/Tags/updateTag");
 
 //七牛token
-Route::rule('Image/QiniuGetToken',"index/Index/QiniuGetToken");
+Route::rule('api/Image/QiniuGetToken',"index/Index/QiniuGetToken");
 
 
-Route::rule('uploadImage',"index/Index/index_InfoAction");
-Route::rule('hello',"index/Index/test");
-Route::rule('userInfo',"user/Index/index");
-Route::rule('login',"user/Index/login");
+Route::rule('api/uploadImage',"index/Index/index_InfoAction");
+Route::rule('api/hello',"index/Index/test");
+Route::rule('api/userInfo',"user/Index/index");
+Route::rule('api/login',"user/Index/login");
 Route::rule('wechatLogin',"user/Index/wechat_login");
 Route::rule('wechatUrl',"index/Index/wechatUrl");
 
 
 //后台管理
-Route::rule('admin/login',"admin/Index/login");
+Route::rule('api/admin/login',"admin/Index/login");
 
 
 
 //人像识别
-Route::rule('aiperson/do',"index/Index/presonAi");
+Route::rule('api/aiperson/do',"index/Index/presonAi");
 
 //return [
 //    '__pattern__' => [

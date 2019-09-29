@@ -10,8 +10,6 @@
 namespace app\admin\controller;
 use app\user\model\User;
 use think\Request;
-use think\db;
-use think\controller;
 use app\admin\BaseController;
 class Index extends BaseController
 {

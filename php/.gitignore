@@ -2,3 +2,6 @@
 composer.lock
 *.log
 thinkphp
+config.php
+database.php
+redis.php
