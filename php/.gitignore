@@ -4,3 +4,4 @@ composer.lock
 thinkphp
 config.php
 database.php
+redis.php
