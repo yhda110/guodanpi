@@ -26,14 +26,17 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
+										:error-messages="useridError"
+										v-model="userid"
                     label="用户名"
                     name="login"
                     prepend-icon="person"
                     type="text"
                   ></v-text-field>
-
                   <v-text-field
+										:error-messages="pswordError"
                     id="password"
+										v-model="psword"
                     label="密码"
                     name="password"
                     prepend-icon="lock"
@@ -59,11 +62,46 @@
       source: String,
     },
     data: () => ({
+			userid: 'sdfdfsf',
+			useridError: '',
+			psword: 'dsfsfds',
+			pswordError: '',
       drawer: null,
 		}),
+		watch:{
+			userid(){
+				if(this.userid.length > 8) {
+					this.useridError = '用户名位数不能超过8位'
+				}else {
+					this.useridError = ''
+				}
+			},
+			psword() {
+				if(this.psword.length > 8) {
+					this.pswordError = '密码位数不能超过8位'
+				}else {
+					this.pswordError = ''
+				}
+			}
+		},
 		methods: {
 			login() {
-				console.log('登录')
+				console.log(this.userid)
+				console.log(this.psword)
+				if(this.userid === '') {
+					this.useridError = '请输入用户名'
+					return false
+				} else if(this.userid.length > 8) {
+					this.useridError = '用户名位数不能超过8位'
+					return false
+				}
+				if(this.psword === '') {
+					this.pswordError = '请输入用户名'
+					return false
+				} else if(this.psword.length > 8) {
+					this.pswordError = '密码位数不能超过8位'
+					return false
+				}
 			}
 		}
   }
