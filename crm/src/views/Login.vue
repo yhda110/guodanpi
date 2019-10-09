@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  import{ mapMutations } from 'vuex'
   export default {
     props: {
       source: String,
@@ -70,38 +71,45 @@
 		}),
 		watch:{
 			userid(){
-				if(this.userid.length > 8) {
-					this.useridError = '用户名位数不能超过8位'
+				if(this.userid.length > 8 || this.userid.length < 6) {
+					this.useridError = '用户名位数6-8位'
 				}else {
 					this.useridError = ''
 				}
 			},
 			psword() {
-				if(this.psword.length > 8) {
-					this.pswordError = '密码位数不能超过8位'
+				if(this.psword.length > 8 || this.psword.length < 6) {
+					this.pswordError = '密码位数6-8位'
 				}else {
 					this.pswordError = ''
 				}
 			}
 		},
 		methods: {
+      ...mapMutations(['changeLogin']),
 			login() {
-				console.log(this.userid)
-				console.log(this.psword)
 				if(this.userid === '') {
 					this.useridError = '请输入用户名'
 					return false
-				} else if(this.userid.length > 8) {
-					this.useridError = '用户名位数不能超过8位'
+				} else if(this.userid.length > 8 || this.userid.length < 6) {
+					this.useridError = '用户名位数6-8位'
 					return false
 				}
 				if(this.psword === '') {
 					this.pswordError = '请输入用户名'
 					return false
-				} else if(this.psword.length > 8) {
-					this.pswordError = '密码位数不能超过8位'
+				} else if(this.psword.length > 8 || this.psword.length < 6) {
+					this.pswordError = '密码位数6-8位'
 					return false
-				}
+        }
+        this.useridError = ''
+        this.pswordError = ''
+        console.log(this.$axios)
+        this.$axios.post('/api/',{
+
+        }).then(res=> {
+          console.log(res)
+        })
 			}
 		}
   }
