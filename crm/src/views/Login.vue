@@ -63,16 +63,16 @@
       source: String,
     },
     data: () => ({
-			userid: 'sdfdfsf',
+			userid: 'gdp_59387412',
 			useridError: '',
-			psword: 'dsfsfds',
+			psword: '000000',
 			pswordError: '',
       drawer: null,
 		}),
 		watch:{
 			userid(){
-				if(this.userid.length > 8 || this.userid.length < 6) {
-					this.useridError = '用户名位数6-8位'
+				if(this.userid.length > 16 || this.userid.length < 6) {
+					this.useridError = '用户名位数6-16位'
 				}else {
 					this.useridError = ''
 				}
@@ -91,8 +91,8 @@
 				if(this.userid === '') {
 					this.useridError = '请输入用户名'
 					return false
-				} else if(this.userid.length > 8 || this.userid.length < 6) {
-					this.useridError = '用户名位数6-8位'
+				} else if(this.userid.length > 16 || this.userid.length < 6) {
+					this.useridError = '用户名位数6-16位'
 					return false
 				}
 				if(this.psword === '') {
@@ -105,10 +105,11 @@
         this.useridError = ''
         this.pswordError = ''
         console.log(this.$axios)
-        this.$axios.post('/api/',{
-
+        this.$axios.post('/api/admin/login',{
+          username: this.userid,
+          password: this.psword
         }).then(res=> {
-          console.log(res)
+          console.log(res.data)
         })
 			}
 		}
