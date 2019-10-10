@@ -11,7 +11,6 @@ namespace app\index\controller;
 
 use app\index\model\threadModel;
 use app\user\model\User;
-use system\ImageService\ImageService;
 use system\RedisService\RedisService;
 use system\userService\userService;
 use think\Controller;
@@ -91,12 +90,24 @@ class Thread extends Controller
         $ImgModel = new ImgModel();
         if ($userId == 0) {
             //获取全部帖子
-            $info = $threadModel->getThread(0, $offset, $limit, $sort);
+            try{
+                $result = $threadModel->getThread(0, $offset, $limit, $sort);
+            }catch (\Exception $e){
+                returnJsonErrorInfo('没有更多数据了',0);
+            }
+            $info = $result['info'];
+            $count = $result['count'];
         } else {
             if ($this->userId) {
                 $userId = $this->userId;
             }
-            $info = $threadModel->getThread($userId, $offset, $limit, $sort);
+            try{
+                $result = $threadModel->getThread($userId, $offset, $limit, $sort);
+            }catch (\Exception $e){
+                returnJsonErrorInfo('没有更多数据了',0);
+            }
+            $info = $result['info'];
+            $count = $result['count'];
         }
         if (empty($info)) {
             returnJsonErrorInfo('未获取到数据', 500);
@@ -125,7 +136,6 @@ class Thread extends Controller
             }
             $info[$key]['img_list'] = $pic_img;
         }
-        $count = $threadModel->countThread($userId);
         $result = array(
             'count' => $count,
             'info' => $info
@@ -133,40 +143,7 @@ class Thread extends Controller
         returnJsonInfo($result);
     }
 
-    /**
-     * 更改帖子状态 包含删除
-     * is_del = 1 删除帖子
-     * state = 0 等待审核  = 1 审核通过  = 2 审核被拒
-     */
-    public function publishThread(Request $request)
-    {
-        if (!Request::instance()->isPost()) exit();
-        if ($this->userId == 0) {
-            returnJsonErrorInfo(self::$errorResult[501], 501);
-            exit();
-        }
-        $User = new User();
-        $userInfo = $User->getOne($this->userId);
-        if (empty($userInfo)) {
-            returnJsonErrorInfo(self::$errorResult[10004], 10004);
-            exit();
-        }
-        if ($userInfo['type'] != 1) {
-            returnJsonErrorInfo(self::$errorResult[11001], 11001);
-            exit();
-        }
-        $id = $request->param('thread_id');
-        $state = $request->param('state', 0);
-        $is_del = $request->param('is_del', 0);
-        $type = $request->param('type', 0);
-        $threadModel = new threadModel();
-        $res = $threadModel->updateThread($id, $state, $is_del, $type);
-        if (!$res) {
-            returnJsonErrorInfo(self::$errorResult[11001], 11001);
-            exit();
-        }
-        returnJsonInfo('操作成功');
-    }
+
     /**
      * @param Request $request
      * 帖子上传

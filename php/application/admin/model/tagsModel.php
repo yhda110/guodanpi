@@ -6,7 +6,7 @@
  * Time: 11:32
  */
 
-namespace app\index\model;
+namespace app\admin\model;
 use think\Model;
 use think\db;
 

@@ -8,11 +8,12 @@
 
 namespace app\admin;
 use think\Request;
-use think\db;
-class BaseController
+use think\Controller;
+class BaseController extends Controller
 {
-    function _request()
+    public function __construct(Request $request = null)
     {
-
+        parent::__construct($request);
     }
+
 }

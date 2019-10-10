@@ -20,7 +20,9 @@ class User extends Model
     }
     function getOne($where)
     {
-        $res = DB::table($this->table)->where($where)->find();
+        $res = DB::table($this->table)->where($where)
+            ->field('id,type,nickname,sex,pic_id,phone,create_time')
+            ->find();
         return $res;
     }
     function getUserByUser($user)
