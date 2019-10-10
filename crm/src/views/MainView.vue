@@ -1,112 +1,34 @@
 <template>
-	<v-app>
-			<v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>果丹皮后台管理系统</v-toolbar-title>
-    </v-app-bar>
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-      <v-list dense>
-        <template v-for="item in slidebarData">
-          <v-row
-            v-if="item.heading"
-            :key="item.heading"
-            align="center"
-          >
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-col>
-            <v-col
-              cols="6"
-              class="text-center"
-            >
-              <a
-                href="#!"
-                class="body-2 black--text"
-              >EDIT</a>
-            </v-col>
-          </v-row>
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
-          >
-            <template v-slot:activator>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ item.text }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-            <v-list-item
-              v-for="(child, i) in item.children"
-              :key="i"
-              @click="xx"
-            >
-              <v-list-item-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ child.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-          <v-list-item
-            v-else
-            :key="item.text"
-            @click="xx"
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-    <v-content>
       <v-container class="fill-witdh" fluid>
-        <v-tabs>
-          <v-tab>全部</v-tab>
-          <v-tab>待审核</v-tab>
-          <v-tab>已通过</v-tab>
-          <v-tab>已驳回</v-tab>
+        <v-tabs >
+          <v-tab v-for="item in tabslist" :key="item.id" @change="getnewdata(item.id)">{{item.name}}</v-tab>
         </v-tabs>
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left">名称</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
-                <th class="text-left">卡路里</th>
+                <th class="text-left">id</th>
+                <th class="text-left">发布时间</th>
+                <th class="text-left">标题</th>
+                <th class="text-left">发帖人</th>
+                <!-- <th class="text-left">内容</th> -->
+                <th class="text-left">状态</th>
+                <th class="text-left">操作</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, key) in uploadList" :key="key">
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
-                <td>{{ item.calories }}</td>
+              <tr v-for="(item, key) in uploadList" :key="key" >
+                <td>{{ item.id }}</td>
+                <td>{{ item.create_time }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.nick_name }}</td>
+                <!-- <td>{{ item.content }}</td> -->
+                <td>{{ item.is_published_text }}</td>
+                <td class="text-center">
+                    <v-btn color="primary" :x-small="true" style="margin-right:10px;">删除</v-btn>
+                     <v-btn color="primary" :x-small="true" @click="look(item.id)" >查看</v-btn>
+                    <!-- <v-btn color="primary" x-small=true @click="login">登录</v-btn> -->
+                </td>
               </tr>
             </tbody>
           </template>
@@ -114,48 +36,45 @@
         <div class="text-center">
           <v-pagination
             v-model="page"
-            :length="6"
+            :length="total"
+            @input="getNext(page)"
           ></v-pagination>
         </div>
       </v-container>
-    </v-content>
-    <v-footer app>
-      <span>&copy; 2019 果丹皮网络科技有限公司</span>
-    </v-footer>
-	</v-app>
 </template>
 <script>
 export default {
 	data() {
 		return ({
       drawer: null,
-      page: 2,
+      page: 1,
+      total:0,
+      limt:10,
+      tabs:'',//选中的tab
       uploadList: [
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
-        {name: '果丹皮', calories: '1300'},
+
       ],
-			slidebarData: [
-				{
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: '资源审核',
-          model: false,
-          children: [
-						{ icon: 'content_copy', text: '用户发贴列表', routerName: 'uploadList' }
-          ],
+      tabslist:[
+        {
+          id:'',
+          name:'全部'
         },
-			]
+        {
+          id:'0',
+          name:'待审核'
+        },
+        {
+          id:'1',
+          name:'已通过'
+        },
+       {
+          id:'2',
+          name:'已驳回'
+        },
+
+
+
+      ],
 			// slidebarData: [
       //   { icon: 'contacts', text: 'Contacts' },
       //   { icon: 'history', text: 'Frequently contacted' },
@@ -189,11 +108,47 @@ export default {
       //   { icon: 'keyboard', text: 'Go to the old version' },
       // ],
 		})
-	},
+  },
+  created(){
+  this.getdata()
+  },
 	methods: {
-		xx(data) {
-			console.log(data)
-		}
+    getNext(number){
+      if(this.type){
+          this.getdata(number,this.type)
+      }else{
+          this.getdata(number)
+      }
+    },
+    look(val){
+       this.$router.push({path:'/postsDetail',query:{id:val}})
+    },
+    getnewdata(val){
+      this.page=1
+       if(val){
+         this.tabs=val
+        this.getdata(1,val)
+       }else{
+         this.tabs=''
+        this.getdata(1)
+       }
+    },
+    getdata(page,type){
+      this.$axios.post('/api/admin/thread/getThread',{
+        userid:'',
+        limit:this.limt,
+        offset:page?page-1:this.page-1,
+        sort:'',
+        is_published:type?type:'',
+      }).then(res=>{
+           if(res.data.flag===true){
+              this.uploadList=res.data.data.info
+              this.total=Math.ceil(Number(res.data.data.count)/this.limt)
+
+           }
+
+      })
+    }
 	}
 }
 </script>

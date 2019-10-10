@@ -68,6 +68,7 @@
 			psword: '000000',
 			pswordError: '',
       drawer: null,
+      token:''
 		}),
 		watch:{
 			userid(){
@@ -109,7 +110,11 @@
           username: this.userid,
           password: this.psword
         }).then(res=> {
-          console.log(res.data)
+           if(res.data.flag===true){
+             this.token=res.data.data.token
+             this.changeLogin({ token: this.token });
+             this.$router.push({path:'/MainView'})
+           }
         })
 			}
 		}
