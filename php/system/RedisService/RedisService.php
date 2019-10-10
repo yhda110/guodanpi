@@ -29,8 +29,16 @@ class RedisService extends Controller
         return $this->redis->get($key);
     }
 
-    public function setRedis($key, $value)
+    public function setRedis($key, $value,$timeout = 9999999999999)
     {
-        $this->redis->set($key,$value);
+        if(!$timeout){
+            $this->redis->set($key,$value);
+        }else{
+            $this->redis->set($key,$value,$timeout);
+        }
+    }
+    public function removeKey($key)
+    {
+        $this->redis->del("$key");
     }
 }

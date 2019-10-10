@@ -66,6 +66,33 @@ class Wechat
         redirect($codeUrl);
     }
     /**
+     * 获取用户信息
+     */
+    public function getUserInfo(Request $request)
+    {
+        Loader::import('userService/userService', SYSTEM_PATH);
+        $ImgModel = new ImgModel();
+        $userLogin = new userService();
+        $userModel = new User();
+        $user_id= $userLogin->isLogin();
+        if($user_id>0){
+            $id = $user_id;
+        }else{
+            $id = $request->param('userid',0);
+//            $current_url = get_current_url();
+//            redirect('/wechat/login?state=' . $current_url);
+        }
+        $userInfo = $userModel->getOne("id=$id");
+        $userLogin->doLogin($userInfo);
+        if(empty($userInfo)){
+            returnJsonErrorInfo(self::$returnCode[14001],14001);exit();
+        }else{
+            $pic_img = $ImgModel->getUrlById($userInfo['pic_id'])['pic_url'];
+            $userInfo['pic_img'] = $pic_img;
+        }
+        returnJsonInfo($userInfo);
+    }
+    /**
      * 微信登录回调
      * @param Request $request
      */

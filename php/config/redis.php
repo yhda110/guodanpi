@@ -1,4 +1,4 @@
 <?php
 return [
-    'THREAD_PV' => 'thread_'
+    'thread' => 'thread_'
 ];

@@ -110,7 +110,6 @@ class Index extends Controller
     function presonAi(Request $request)
     {
         $imgModel = new ImgModel();
-//        $image = file_get_contents('/static/Image/test.jpg');
         $img = $request->param('imgCode');
         if (!$img) {
             returnJsonErrorInfo('图片为空', 500);

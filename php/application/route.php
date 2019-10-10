@@ -10,13 +10,16 @@
 // +----------------------------------------------------------------------
 use think\Route;
 //M站
+
+//获取用户信息
+Route::rule('api/user/getUserInfo',"index/Wechat/getUserInfo");
+
 Route::rule('index',"index/Index/index");
 Route::rule('show',"index/Index/show");
 //帖子上传
 Route::rule('api/thread/getThread',"index/Thread/getThread");
 Route::rule('api/thread/getOneThread',"index/Thread/getOneThread");
 Route::rule('api/thread/upload',"index/Thread/threadUpload");
-Route::rule('api/thread/publishThread',"index/Thread/publishThread");
 
 //新闻咨询
 Route::rule('api/news',"index/Index/news");
@@ -29,10 +32,7 @@ Route::rule('wechat/login',"index/Wechat/login");
 Route::rule('wechat/wechatLogin',"index/Wechat/wechatLogin");
 
 //标签路由
-Route::rule('api/tag/getAll',"index/Tags/getAllTag");
-Route::rule('api/tag/insertTag',"index/Tags/insertTag");
-Route::rule('api/tag/deleteTag',"index/Tags/deleteTag");
-Route::rule('api/tag/updateTag',"index/Tags/updateTag");
+
 
 //七牛token
 Route::rule('api/Image/QiniuGetToken',"index/Index/QiniuGetToken");
@@ -47,8 +47,18 @@ Route::rule('wechatUrl',"index/Index/wechatUrl");
 
 
 //后台管理
-Route::rule('api/admin/login',"admin/Index/login");
+Route::rule('admin',"admin/Index/index");
 
+
+Route::rule('api/admin/login',"admin/Index/login");
+Route::rule('api/admin/thread/publishThread',"admin/Index/publishThread");
+Route::rule('api/admin/thread/getThread',"admin/Index/getThread");
+Route::rule('api/admin/thread/getOneThread',"admin/Index/getOneThread");
+
+Route::rule('api/admin/tag/getAll',"admin/Tags/getAllTag");
+Route::rule('api/admin/tag/insertTag',"admin/Tags/insertTag");
+Route::rule('api/admin/tag/deleteTag',"admin/Tags/deleteTag");
+Route::rule('api/admin/tag/updateTag',"admin/Tags/updateTag");
 
 
 //人像识别
