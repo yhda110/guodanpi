@@ -3,12 +3,12 @@
     <v-row align="center" justify="center">
       <v-col cols="16" sm="12" md="8">
         <v-card class="mx-auto">
-          <v-img v-for="item in condata.img_list" :src="item" height="200px"></v-img>
+          <v-img v-for="(item,index) in condata.img_list" :src="item" height="200px" :key="index"></v-img>
           <v-card-title>
             <div>{{condata.title}}</div>
             <span class="grey--text subtitle-1" style="margin-left: 10px;">{{condata.nick_name}}</span>
-			 <div class="flex-grow-1"></div>
-			<span class="grey--text subtitle-1" style="margin-left: 10px;">{{condata.create_time}}</span>
+            <div class="flex-grow-1"></div>
+            <span class="grey--text subtitle-1" style="margin-left: 10px;">{{condata.create_time}}</span>
           </v-card-title>
           <v-expand-transition>
             <div>
@@ -16,8 +16,8 @@
             </div>
           </v-expand-transition>
           <v-card-actions>
-		    <div class="flex-grow-1"></div>
-            <v-switch v-model="success" class="ma-2" @change="ispass" label="审核"></v-switch>
+            <div class="flex-grow-1"></div>
+            <v-switch v-model="success" class="ma-2" @change="ispass(success)" label="审核"></v-switch>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -28,14 +28,14 @@
 export default {
   data() {
     return {
-	  condata: {},
-	  success: false,
+      condata: {},
+      success: true
     };
   },
   methods: {
-	ispass(val){
-
-	},
+    ispass() {
+      this.success = "true";
+    },
     getdata(val) {
       this.$axios
         .post("/api/admin/thread/getOneThread", {
@@ -46,7 +46,9 @@ export default {
             this.condata = res.data.data;
           }
         })
-        .catch(err => {});
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created() {
