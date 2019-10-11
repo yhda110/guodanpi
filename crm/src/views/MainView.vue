@@ -25,7 +25,7 @@
                 <!-- <td>{{ item.content }}</td> -->
                 <td>{{ item.is_published_text }}</td>
                 <td class="text-center">
-                    <v-btn color="primary" :x-small="true" style="margin-right:10px;">删除</v-btn>
+                     <v-btn color="primary" :x-small="true" style="margin-right:10px;" @click="deleteItem(item.id)">删除</v-btn>
                      <v-btn color="primary" :x-small="true" @click="look(item.id)" >查看</v-btn>
                     <!-- <v-btn color="primary" x-small=true @click="login">登录</v-btn> -->
                 </td>
@@ -122,6 +122,14 @@ export default {
     },
     look(val){
        this.$router.push({path:'/postsDetail',query:{id:val}})
+    },
+    deleteItem(val){
+      this.$axios.post("/api/admin/thread/publishThread",{
+         thread_id:val,
+         is_del:1
+       }).then(res=>{
+          console.log(res)
+       })
     },
     getnewdata(val){
       this.page=1

@@ -1,5 +1,8 @@
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '{$__PUBLIC__}'
+    : './',
   devServer: {
 		port: 8080, // 端口号
 		host: '0.0.0.0',
