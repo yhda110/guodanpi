@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     ispass() {
-      this.success = "true";
+      this.success = true;
     },
     getdata(val) {
       this.$axios
