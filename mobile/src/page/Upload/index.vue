@@ -122,7 +122,7 @@ export default {
 			let reqData = {...this.uploadData, userid: '6'}
 			reqData.imglist = reqData.imglist.join()
 			let result = await this.$api('post', '/api/thread/upload', reqData)	
-			if(result.data.code === 0){
+			if(result.code === 0){
 				this.$Toast.success({message: '发布成功，请耐心等待审核'})
 				setTimeout(() => {
 					this.$router.push('/')

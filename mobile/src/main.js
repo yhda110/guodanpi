@@ -21,7 +21,7 @@ Vue.prototype.$Toast = Toast
 Vue.prototype.$api = function (type, url, data) {
   return new Promise((resolve, reject) => {
     Axios[type](url,data).then(data => {
-      resolve(data)
+      resolve(data.data)
     }).catch(err => {
       reject(err)
     })

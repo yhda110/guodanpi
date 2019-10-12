@@ -2,7 +2,7 @@
 	<div class="list_wrap clearfix">
 		<vue-waterfall-easy 
 			:imgsArr="list" 
-			@scrollReachBottom="getNewsList"
+			@scrollReachBottom="getList"
 			:isRouterLink="true"
 			:loadingDotStyle="loadingDotStyle"
 			:enablePullDownEvent="true"
@@ -25,47 +25,47 @@ export default {
 	},
 	data() {
 		return {
-			param: {
-				cid: 56,
-				ext: 'house',
-				token: 'c786875b8e04da17b24ea5e332745e0f',
-				num: 10,
-				// expIds: '20190106A13PFT%7C20190108A04MLS',
-				page: 1,
-				
+			listData: {
+				// userid: '', //int 测试id：6（不传获取所有帖子）
+				limit: 10, //int 长度（默认：10）
+				offset: 1, //int 偏移量（默认：0）
+				sort: 'desc', //string 'desc'：倒序 'asc'：正序
 			},
+			// param: {
+			// 	cid: 56,
+			// 	ext: 'house',
+			// 	token: 'c786875b8e04da17b24ea5e332745e0f',
+			// 	num: 10,
+			// 	// expIds: '20190106A13PFT%7C20190108A04MLS',
+			// 	page: 1,
+			// },
 			loadingDotStyle: {
-				backgroundColor: '#000'
+				backgroundColor: '#d43d3d'
 			},
 			list: []
 		}
 	},
 	mounted() {
 		this.setState({key: 'indexHeaderSHow', value: true})
-		this.getNewsList()
 		this.getList()
 
 	},
 	methods: {
 		...mapActions(['setState']),
-		getNewsList() {
-			this.$http.get('/tencent/irs/rcd',{
-				params: this.param
-			}).then((response) => {
-				let data = response.data.data
-				this.param.page ++
-				data.forEach(element => {
+		// 获取发帖列表
+		async getList() {
+			let result = await this.$api('post','/api/thread/getThread',this.listData)
+			console.log(result)
+			this.listData.offset ++
+			result.data.info.forEach(element => {
+				if(element.img_list[0]){
 					this.list.push({
 						...element,
-						src: element.multi_imgs[0],
+						src: element.img_list[0],
 						href: '',
 					})
-				});
-				// console.log(this.list)
+				}
 			})
-		},
-		getList() {
-			// this.$http.
 		},
 		pullDownMove() {
 			// console.log(2)
