@@ -4,6 +4,7 @@ import home from './views/Home.vue'
 import login from './views/Login.vue'
 import MainView from './views/MainView.vue'
 import postsDetail from './views/PostsDetail.vue'
+import tags from './views/tags.vue'
 Vue.use(Router)
 const router = new Router({
   routes: [
@@ -30,6 +31,11 @@ const router = new Router({
           path: '/postsDetail',
           name: 'postsDetail',
           component: postsDetail,
+        },
+        {
+          path: '/tags',
+          name: 'tags',
+          component: tags,
         }
       ]
     }

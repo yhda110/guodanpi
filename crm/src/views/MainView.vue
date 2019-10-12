@@ -47,6 +47,7 @@ export default {
 	data() {
 		return ({
       drawer: null,
+      defaultType:'',
       page: 1,
       total:0,
       limt:10,
@@ -121,7 +122,7 @@ export default {
       }
     },
     look(val){
-       this.$router.push({path:'/postsDetail',query:{id:val}})
+       this.$router.push({path:'/postsDetail',query:{id:val,type:this.defaultType}})
     },
     deleteItem(val){
       this.$axios.post("/api/admin/thread/publishThread",{
@@ -132,6 +133,7 @@ export default {
        })
     },
     getnewdata(val){
+      this.defaultType=val
       this.page=1
        if(val){
          this.tabs=val

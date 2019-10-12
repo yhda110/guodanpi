@@ -46,7 +46,7 @@
             <v-list-item
               v-for="(child, i) in item.children"
               :key="i"
-              @click="xx"
+              @click="xx(child.routerName)"
             >
               <v-list-item-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
@@ -58,7 +58,7 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item
+          <!-- <v-list-item
             v-else
             :key="item.text"
             @click="xx"
@@ -71,7 +71,7 @@
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -97,7 +97,16 @@ export default {
           text: '资源审核',
           model: false,
           children: [
-            { icon: 'content_copy', text: '用户发贴列表', routerName: 'uploadList' }
+            { icon: 'content_copy', text: '用户发贴列表', routerName: '/MainView' }
+          ],
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: '标签管理',
+          model: false,
+          children: [
+            { icon: 'content_copy', text: '标签列表', routerName: '/tags' }
           ],
         },
 			]
@@ -139,7 +148,7 @@ export default {
   },
 	methods: {
 		xx(data) {
-			console.log(data)
+		this.$router.push({path:data})
     },
   }
 }

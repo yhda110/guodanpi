@@ -5,8 +5,10 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import store from './store'
-import toastRegistry from './plugins/toast'
-Vue.use(toastRegistry)
+import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
+import element from './plugins/element'
+Vue.use(element)
 Vue.config.productionTip = false
 new Vue({
   vuetify,
