@@ -15,7 +15,7 @@ module.exports = {
 					}
 			},
 			'/api': {
-				target: 'https://www.lzjrys.store/api/',   // 需要请求的地址
+				target: 'http://test.lzjrys.store/api/',   // 需要请求的地址
 				changOrigin: true,  // 是否跨域
 				pathRewrite: {
 						'^/api': '/'  // 替换target中的请求地址，也就是说，在请求的时候，url用'/proxy'代替'http://ip.taobao.com'
