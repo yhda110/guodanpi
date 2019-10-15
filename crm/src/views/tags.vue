@@ -25,7 +25,7 @@
               :type="tag.is_del===1?'danger':'success'"
               :disable-transitions="false"
               @click="updateInfo(tag,index)"
-              @close="handleClose(tag.id)"
+              @close="handleClose(tag.id,tag.is_del)"
             >{{tag.tag_name}}</el-tag>
             <el-input v-else  size="small" class="input-new-tag"   @blur="closeInput(tag)" v-model="tag.tag_name"></el-input>
             </span>
@@ -68,16 +68,17 @@ export default {
     this.getdata(1);
   },
   methods: {
-    handleClose(tag) {
+    handleClose(tag,type) {
+
       this.$axios.post('/api/admin/tag/deleteTag',{
         tag_id:tag,
-        is_del:1
+        is_del:type==1?0:1
       }).then(res=>{
-        console.log(res.data,'99999999999999')
           if(res.data.flag===true){
+             this.$message.success(res.data.msg)
              this.getdata(1)
           }else{
-            this.$message(res.data.msg)
+            this.$message.error(res.data.msg)
           }
       })
     },

@@ -72,8 +72,10 @@ export default {
          state:val
        }).then(res=>{
           if(res.data.flag===true){
-
+           this.$message.success(res.data.msg)
            this.getdata(this.next_id,this.type)
+          }else{
+            this.$message.error(res.data.msg)
           }
        })
     },
