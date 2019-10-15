@@ -52,7 +52,7 @@ _axios.interceptors.response.use(
       // Toast.show('hello world')
       // alert(1)
 
-    }else{
+    }else if(response.data.code==401){
       Message({
         type:'error',
         message:response.data.msg

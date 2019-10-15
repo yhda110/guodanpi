@@ -114,6 +114,8 @@
              this.token=res.data.data.token
              this.changeLogin({ token: this.token });
              this.$router.push({path:'/MainView'})
+           }else{
+             this.$message.error(res.data.msg)
            }
         })
 			}
