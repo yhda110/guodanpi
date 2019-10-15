@@ -43,7 +43,7 @@ class Index extends Controller
             $current_url = get_current_url();
             redirect('/wechat/login?state=' . $current_url);
         }
-        $this->assign('__PUBLIC__', '/static');
+        $this->assign('__PUBLIC__', '/static/guodanpi');
         return $this->fetch();
     }
 

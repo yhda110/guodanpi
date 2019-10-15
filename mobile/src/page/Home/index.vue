@@ -8,20 +8,24 @@
 			:enablePullDownEvent="true"
 			@pullDownMove="pullDownMove"
 			@pullDownEnd="pullDownEnd"
+			@click="openDetail"
 		>
 			<slot>
 				<!-- <div>{{prop.src}}</div> -->
 			</slot>
 		</vue-waterfall-easy>
+		<list-detail></list-detail>
 	</div>
 </template>
 <script>
 import vueWaterfallEasy from 'vue-waterfall-easy'
+import listDetail from '../../components/ListDetail'
 import { mapActions } from 'vuex'
 export default {
 	name: 'Home',
 	components: {
-    vueWaterfallEasy
+		vueWaterfallEasy,
+		listDetail
 	},
 	data() {
 		return {
@@ -31,14 +35,6 @@ export default {
 				offset: 1, //int 偏移量（默认：0）
 				sort: 'desc', //string 'desc'：倒序 'asc'：正序
 			},
-			// param: {
-			// 	cid: 56,
-			// 	ext: 'house',
-			// 	token: 'c786875b8e04da17b24ea5e332745e0f',
-			// 	num: 10,
-			// 	// expIds: '20190106A13PFT%7C20190108A04MLS',
-			// 	page: 1,
-			// },
 			loadingDotStyle: {
 				backgroundColor: '#d43d3d'
 			},
@@ -67,11 +63,14 @@ export default {
 				}
 			})
 		},
+		openDetail(e,data) {
+			console.log(data)
+		},
 		pullDownMove() {
 			// console.log(2)
 		},
 		pullDownEnd() {
-			console.log(3)
+			// console.log(arguments)
 		}
 	}
 }

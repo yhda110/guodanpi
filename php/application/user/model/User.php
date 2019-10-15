@@ -47,4 +47,12 @@ class User extends Model
         $res = DB::table($this->table)->field($field)->where($where)->find();
         return $res;
     }
+    function adminGetUser($status)
+    {
+        $res = DB::table($this->table)
+            ->field('id,nickname,user,sex,pic_id,ip,create_time,status')
+            ->where("status=$status")
+            ->select();
+        return $res;
+    }
 }

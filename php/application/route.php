@@ -49,9 +49,12 @@ Route::rule('wechatUrl',"index/Index/wechatUrl");
 //后台管理
 Route::rule('admin',"admin/Index/index");
 
+Route::rule('api/admin/user/getUser',"admin/Index/getUsers");
+Route::rule('api/admin/user/updateUserStatus',"admin/Index/updateUserStatus");
 
 Route::rule('api/admin/login',"admin/Index/login");
 Route::rule('api/admin/thread/publishThread',"admin/Index/publishThread");
+
 Route::rule('api/admin/thread/getThread',"admin/Index/getThread");
 Route::rule('api/admin/thread/getOneThread',"admin/Index/getOneThread");
 
@@ -59,7 +62,7 @@ Route::rule('api/admin/tag/getAll',"admin/Tags/getAllTag");
 Route::rule('api/admin/tag/insertTag',"admin/Tags/insertTag");
 Route::rule('api/admin/tag/deleteTag',"admin/Tags/deleteTag");
 Route::rule('api/admin/tag/updateTag',"admin/Tags/updateTag");
-
+Route::rule('api/documents',"Reflection/Api/Doc/Documents@run");
 
 //人像识别
 Route::rule('api/aiperson/do',"index/Index/presonAi");
