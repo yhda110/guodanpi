@@ -3,6 +3,9 @@
 import Vue from 'vue';
 import axios from "axios";
 import router from '../router';
+import {Message} from 'element-ui'
+
+
 // import Toast from './toast'
 // console.log(Toast)
 // Vue.prototype.$toast= Toast;
@@ -48,6 +51,15 @@ _axios.interceptors.response.use(
     }else if(response.data.code==0){
       // Toast.show('hello world')
       // alert(1)
+
+    }else{
+      Message({
+        type:'error',
+        message:response.data.msg
+      })
+       router.replace({
+          path: '/loginin',
+      })
     }
     // Do something with response data
     return response;

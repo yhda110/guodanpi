@@ -109,6 +109,15 @@ export default {
             { icon: 'content_copy', text: '标签列表', routerName: '/tags' }
           ],
         },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: '用户管理',
+          model: false,
+          children: [
+            { icon: 'content_copy', text: '用户列表', routerName: '/userList' }
+          ],
+        },
 			]
 			// slidebarData: [
       //   { icon: 'contacts', text: 'Contacts' },

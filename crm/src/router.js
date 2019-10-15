@@ -5,6 +5,7 @@ import login from './views/Login.vue'
 import MainView from './views/MainView.vue'
 import postsDetail from './views/PostsDetail.vue'
 import tags from './views/tags.vue'
+import userList from './views/userList.vue'
 Vue.use(Router)
 const router = new Router({
   routes: [
@@ -22,6 +23,11 @@ const router = new Router({
       name: 'home',
       component: home,
       children:[
+        {
+          path: '/userList',
+          name: 'userList',
+          component: userList,
+        },
         {
           path: '/MainView',
           name: 'MainView',
