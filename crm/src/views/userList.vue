@@ -22,7 +22,7 @@
                 <td>{{ item.nickname }}</td>
                 <td>{{ item.sex }}</td>
                 <td>
-					<img :src="item.pic_img" alt="">
+					<img style="width:48px;height:48px;border-radius:50%;" :src="item.pic_img" alt="">
 				</td>
                 <!-- <td>{{ item.content }}</td> -->
                 <td>{{ item.status}}</td>

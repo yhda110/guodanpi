@@ -68,7 +68,7 @@ export default {
     },
     ischeck(val) {
        this.$axios.post("/api/admin/thread/publishThread",{
-         thread_id:this.id,
+         thread_id:this.next_id?this.next_id:'',
          state:val
        }).then(res=>{
           if(res.data.flag===true){
@@ -90,6 +90,9 @@ export default {
             this.condata = res.data.data;
             this.radioGroup=this.condata.is_published
             this.next_id=this.condata.next_id
+            this.$nextTick(function() {
+         window.scrollTo(0,0);
+      });
           }
         })
         .catch(err => {

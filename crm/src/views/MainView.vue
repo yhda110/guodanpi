@@ -25,7 +25,8 @@
                 <!-- <td>{{ item.content }}</td> -->
                 <td>{{ item.is_published_text }}</td>
                 <td class="text-center">
-                     <v-btn color="primary" :x-small="true" style="margin-right:10px;" @click="deleteItem(item.id)">删除</v-btn>
+                     <v-btn color="primary" :x-small="true" v-if="item.is_del==0" style="margin-right:10px;" @click="deleteItem(item.id,1)">删除</v-btn>
+                       <v-btn color="primary" :x-small="true" v-else style="margin-right:10px;" @click="deleteItem(item.id,0)">恢复</v-btn>
                      <v-btn color="primary" :x-small="true" @click="look(item.id)" >查看</v-btn>
                     <!-- <v-btn color="primary" x-small=true @click="login">登录</v-btn> -->
                 </td>
@@ -72,6 +73,10 @@ export default {
           id:'2',
           name:'已驳回'
         },
+        {
+          id:'3',
+          name:'已删除'
+        }
 
 
 
@@ -124,12 +129,18 @@ export default {
     look(val){
        this.$router.push({path:'/postsDetail',query:{id:val,type:this.defaultType}})
     },
-    deleteItem(val){
+    deleteItem(val,type){
       this.$axios.post("/api/admin/thread/publishThread",{
          thread_id:val,
-         is_del:1
+         is_del:type
        }).then(res=>{
-          console.log(res)
+          if(res.data.flag===true){
+            this.$message.success(res.data.msg)
+            this.getdata(this.page,this.defaultType)
+          }else{
+            this.$message.error(res.data.msg)
+
+          }
        })
     },
     getnewdata(val){
@@ -149,12 +160,15 @@ export default {
         limit:this.limt,
         offset:page?page-1:this.page-1,
         sort:'',
-        is_published:type?type:'',
+        is_del:type==3?1:'',
+        is_published:type?(type==3?'':type):'',
       }).then(res=>{
            if(res.data.flag===true){
               this.uploadList=res.data.data.info
               this.total=Math.ceil(Number(res.data.data.count)/this.limt)
 
+           }else{
+             this.uploadList=[]
            }
 
       })

@@ -27,7 +27,7 @@
               @click="updateInfo(tag,index)"
               @close="handleClose(tag.id,tag.is_del)"
             >{{tag.tag_name}}</el-tag>
-            <el-input v-else  size="small" class="input-new-tag"   @blur="closeInput(tag)" v-model="tag.tag_name"></el-input>
+            <el-input v-else  size="small" class="input-new-tag" ref="tag"   @blur="closeInput(tag,index)" v-model="tag.tag_name"></el-input>
             </span>
 
           </div>
@@ -55,12 +55,12 @@ export default {
       drawer: null,
       page: 1,
       total: 0,
-      limt: 10,
+      limt: 100,
       tabs: "", //选中的tab
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-
+      taglist:[]
     };
   },
   components: {},
@@ -82,8 +82,11 @@ export default {
           }
       })
     },
-    closeInput(tag){
-        this.$axios.post('/api/admin/tag/updateTag',{
+    closeInput(tag,index){
+      if(tag.tag_name==this.taglist[index]){
+
+      }else{
+         this.$axios.post('/api/admin/tag/updateTag',{
         tag_id:tag.id,
         tag_name:tag.tag_name
       }).then(res=>{
@@ -94,11 +97,19 @@ export default {
           this.getdata(1)
         }
       })
+      }
+
       //
     },
     updateInfo(tag,index){
       tag.isupadate=1
+
       this.$set(this.dynamicTags[index],index,tag)
+
+      this.$nextTick(function() {
+        console.log(this.$refs.tag)
+        this.$refs.tag[this.$refs.tag.length-1].$refs.input.focus();
+      });
 
     },
     showInput() {
@@ -151,15 +162,20 @@ export default {
     },
     getdata(page) {
       var num=page*1-1
+      this.taglist=[]
       this.$axios
         .get("api/admin/tag/getAll?limit=" + this.limt + "&offset=" + num)
         .then(res => {
           if (res.data.flag === true) {
+            res.data.data.info.forEach(item=>{
+              this.taglist.push(item.tag_name)
+            })
             this.dynamicTags = res.data.data.info;
 
             this.dynamicTags.forEach((item)=>{
               item.isupadate=0
             });
+            console.log('8888888888',this.taglist)
             this.total = Math.ceil(Number(res.data.data.count) / this.limt);
           }
         });
