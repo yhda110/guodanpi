@@ -46,7 +46,7 @@ _axios.interceptors.response.use(
     if (response.data.code == 401){
       localStorage.clear()
       router.replace({
-          path: '/loginin',
+          path: '/login',
       })
     }else if(response.data.code==0){
       // Toast.show('hello world')
@@ -58,7 +58,7 @@ _axios.interceptors.response.use(
         message:response.data.msg
       })
        router.replace({
-          path: '/loginin',
+          path: '/login',
       })
     }
     // Do something with response data

@@ -115,8 +115,8 @@ export default {
   },
 	methods: {
     getNext(number){
-      if(this.type){
-          this.getdata(number,this.type)
+      if(this.defaultType){
+          this.getdata(number,this.defaultType)
       }else{
           this.getdata(number)
       }
