@@ -98,9 +98,9 @@ class threadModel extends Model
     function updateThread($id, $state = 0, $is_del = 0, $type = 0)
     {
         $data = array();
-        if ($is_del == 1) {  //传入 1 则为删除帖子
-            $data['is_del'] = $is_del;
-        }
+        //传1删除 0恢复
+        $data['is_del'] = $is_del;
+
         if ($state != 9) {  // 传入数字则为更改状态
             $data['is_published'] = $state;
         }
@@ -111,7 +111,7 @@ class threadModel extends Model
         if ($res == 1) {
             return true;
         }
-        return false;
+        return $res;
     }
 
     function getOneThread($id)

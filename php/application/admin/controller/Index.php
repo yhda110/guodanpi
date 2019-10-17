@@ -39,6 +39,7 @@ class Index extends BaseController
         14002 => '帖子id为空',
         14003 => '帖子不存在'
     );
+
     public function __construct(Request $request = null)
     {
         Loader::import('tokenService/tokenService', SYSTEM_PATH);
@@ -46,11 +47,13 @@ class Index extends BaseController
         $this->tokenService = new tokenService();
         parent::__construct($request);
     }
+
     public function index()
     {
         $this->assign('__PUBLIC__', 'static/admin');
         return $this->fetch();
     }
+
     /**
      * @title 用户登录
      * @desc  {"0":"接口地址：https://test.lzjrys.store/api/admin/login","1":"请求方式：post","2":"接口备注：获取token"}
@@ -120,6 +123,7 @@ class Index extends BaseController
      * @param {"name":"offset","type":"int","required":false,"default":"0","desc":"偏移量"}
      * @param {"name":"sort","type":"string","required":false,"default":"desc","desc":"排序，传入desc按倒序排列，传入asc按正序排列"}
      * @param {"name":"is_published","type":"int","required":false,"default":9,"desc":"帖子状态 0：待审核 1：审核通过 2：审核驳回"}
+     * @param {"name":"is_del","type":"int","required":false,"default":0,"desc":"已删除帖子传1 默认不传"}
      * @return {"name":"flag","type":"boolean","required":true,"desc":"成功true 失败false","level":1}
      * @return {"name":"code","type":"string","required":true,"desc":"返回码 0成功","level":1}
      * @return {"name":"msg","type":"string","required":true,"desc":"返回信息","level":1}
@@ -187,6 +191,7 @@ class Index extends BaseController
         );
         returnJsonInfo($result);
     }
+
     /**
      * @title 获取帖子详情
      * @desc  {"0":"接口地址：https://test.lzjrys.store/api/admin/thread/getOneThread","1":"请求方式：post","2":"接口备注：获取帖子详情"}
@@ -290,8 +295,8 @@ class Index extends BaseController
             exit();
         }
         $id = $request->param('thread_id');
-        $state = $request->param('state', 9);
-        $is_del = $request->param('is_del', 0);
+        $state = $request->param('state', 9) == '' ? 9 : $request->param('state', 9);
+        $is_del = $request->param('is_del', 0) == '' ? 0 : $request->param('is_del', 0);
         $type = $request->param('type', 0);
         $threadModel = new threadModel();
         $res = $threadModel->updateThread($id, $state, $is_del, $type);
@@ -303,9 +308,12 @@ class Index extends BaseController
         }
         returnJsonInfo('操作成功');
     }
+
     /**
      * @title 获取用户列表
      * @desc  {"0":"接口地址：https://test.lzjrys.store/api/admin/user/getUser","1":"请求方式：post","2":"接口备注：获取用户列表"}
+     * @param  {"name":"limit","type":"int","required":true,"desc":"长度"}
+     * @param  {"name":"page","type":"int","required":true,"desc":"页数"}
      * @return {"name":"flag","type":"boolean","required":true,"desc":"成功true 失败false","level":1}
      * @return {"name":"code","type":"string","required":true,"desc":"返回码 0成功","level":1}
      * @return {"name":"msg","type":"string","required":true,"desc":"返回信息","level":1}
@@ -328,10 +336,12 @@ class Index extends BaseController
 //        if(!$userId){
 //            returnJsonErrorInfo(self::$result[401],401);exit();
 //        }
-        $status = $request->param('status', 0);
+        $limit = $request->post('limit', 10) != '' ? $request->post('limit', 10) : 10;
+        $page = $request->post('page', 10) != '' ? $request->post('page', 0) : 0;
         $UserModel = new User();
         $ImgModel = new ImgModel();
-        $userInfo = $UserModel->adminGetUser($status);
+        $info = $UserModel->adminGetUser($page, $limit);
+        $userInfo = $info['info'];
         foreach ($userInfo as $key => $item) {
             $userInfo[$key]['pic_img'] = $ImgModel->getUrlById($item['pic_id'])['pic_url'];
             if ($item['sex'] == 1) {
@@ -345,8 +355,13 @@ class Index extends BaseController
                 $userInfo[$key]['status'] = '已封禁';
             }
         }
-        returnJsonInfo($userInfo);
+        $data = [
+            'count' => $info['count'],
+            'data' => $userInfo
+        ];
+        returnJsonInfo($data);
     }
+
     /**
      * @title 获取用户列表
      * @desc  {"0":"接口地址：https://test.lzjrys.store/api/admin/user/updateUserStatus","1":"请求方式：post","2":"接口备注：封禁&解封用户"}
@@ -372,17 +387,18 @@ class Index extends BaseController
             exit();
         }
         $state = $request->param('status');
-        if($state != 0 || $state != 1){
-            returnJsonErrorInfo(self::$result[11001],11001);exit();
+        if ($state != 0 && $state != 1) {
+            returnJsonErrorInfo(self::$result[11001], 11001);
+            exit();
         }
         $update = [
             'status' => $state
         ];
-        $result = $UserModel->updateUser("id=$userId",$update);
-        if($result == 1){
+        $result = $UserModel->updateUser("id=$userId", $update);
+        if ($result == 1) {
             returnJsonInfo('操作成功');
-        }else{
-            returnJsonErrorInfo(self::$result[11001],11001);
+        } else {
+            returnJsonErrorInfo(self::$result[11001], 11001);
         }
     }
 }
