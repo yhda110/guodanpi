@@ -14,7 +14,7 @@
 				<!-- <div>{{prop.src}}</div> -->
 			</slot>
 		</vue-waterfall-easy>
-		<list-detail></list-detail>
+		<list-detail ref="detailCom" ></list-detail>
 	</div>
 </template>
 <script>
@@ -64,7 +64,8 @@ export default {
 			})
 		},
 		openDetail(e,data) {
-			console.log(data)
+			// console.log(data)
+			this.$refs.detailCom.loadDetail(data) 
 		},
 		pullDownMove() {
 			// console.log(2)
