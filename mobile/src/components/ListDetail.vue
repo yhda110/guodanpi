@@ -20,7 +20,7 @@
 export default {
 	data() {
 		return ({
-			show: true,
+			show: false,
 			index: 0,
 			detailData: {
 				img_list: ["https://lzjrys.store/8b81247f5954467bea17b420c7378aed.jpeg","https://lzjrys.store/67e5022ed45ca6e331dea37e742dfc20.png"],
