@@ -1,11 +1,15 @@
 <template>
 	<van-image-preview
 		v-model="show"
-		:images="images"
+		:images="detailData.img_list"
 		:z-index="9999"
 		@change="onChange"
 	>
-		<template v-slot:index>第{{ index+1 }}页/共{{images.length}}页</template>
+		<template v-slot:index>
+			<p>{{detailData.title}}</p>
+			<p>{{ index+1 }}/{{detailData.img_list.length}}</p>
+		</template>
+		
 	</van-image-preview>
 </template>
 <script>
@@ -13,18 +17,18 @@ export default {
 	data() {
 		return ({
 			show: false,
-      index: 0,
-      images: []
+			index: 0,
+			detailData: {
+				img_list: []
+			}
 		})
 	},
 	methods: {
 		async loadDetail(data) {
-			console.log('xxxxxxxxxxx',data.value.id)
 			let result = await this.$api('post','/api/admin/thread/getOneThread',{
 				thread_id: data.value.id
 			})
-			console.log(result)
-			this.images = result.data.img_list
+			this.detailData = result.data
 			this.index = 0
 			this.show = true
 		},
@@ -35,4 +39,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+	p{
+		text-align: center;
+	}
 </style>

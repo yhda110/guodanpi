@@ -37,8 +37,8 @@ export default {
 		return {
 			fileList: [],
 			uploadData: {
-				title: '测试',
-				content: '我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容我是测试内容',
+				title: '',
+				content: '',
 				imglist: []
 			},
 			options: {}
