@@ -28,6 +28,7 @@ _axios.interceptors.request.use(
 
     if(localStorage.getItem('token')){
       config.headers['token'] = localStorage.getItem('token');
+      config.headers['SENDNOTECHECK'] = "dde3db21cd53e3bdd9155b3b8ad21f0d50dae06b";  //todo 短信测试token 上线后注掉
 
       // _axios.defaults.headers.commom['ctoken']=
       console.log(axios.defaults.headers.common)
