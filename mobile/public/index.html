@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script type="text/javascript">
@@ -17,10 +18,49 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" href="./index.css">
     <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js" ></script>
     <title>guodanpi</title>
   </head>
+  <style>
+    body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+    body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+    td,th,caption { font-size:14px; }
+    h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+    address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    a:hover,
+    a:active,
+    a:visited,
+    a:focus { 
+      text-decoration:none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      border: none;
+      color: #000;
+    }
+
+    img { border:none; }
+    ol,ul,li { list-style:none; }
+    input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+    table { border-collapse:collapse; }
+    html {overflow-y: scroll;} 
+
+    .clearfix { *zoom:1; }
+    .clearfix:after {content: ""; display: block; height:0; clear:both; visibility: hidden;}
+
+    body{
+      position: relative;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    .list-page{background-color: #fff}
+    .content_wrap{margin: .266667rem;}
+
+    @import 'variables';
+    @import '~vuetify-scss';
+  </style>
   <body class="list-page">
     <noscript>
       <strong>We're sorry but guodanpi doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

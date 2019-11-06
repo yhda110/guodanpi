@@ -34,7 +34,7 @@ class Thread extends Controller
         11000 => '上传失败',
         11001 => '操作失败'
     );
-
+    //todo 生成APIdoc
     public function __construct(Request $request = null)
     {
         $this->ImgModel = new ImgModel();
