@@ -18,28 +18,32 @@
             ></el-input>
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
             <span :key="tag.id" v-for="(tag,index) in dynamicTags">
-
               <el-tag
-              v-if="tag.isupadate==0"
-              closable
-              :type="tag.is_del===1?'danger':'success'"
-              :disable-transitions="false"
-              @click="updateInfo(tag,index)"
-              @close="handleClose(tag.id,tag.is_del)"
-            >{{tag.tag_name}}</el-tag>
-            <el-input v-else  size="small" class="input-new-tag" ref="tag"   @blur="closeInput(tag,index)" v-model="tag.tag_name"></el-input>
+                v-if="tag.isupadate==0"
+                closable
+                :type="tag.is_del===1?'danger':'success'"
+                :disable-transitions="false"
+                @click="updateInfo(tag,index)"
+                @close="handleClose(tag.id,tag.is_del)"
+              >{{tag.tag_name}}</el-tag>
+              <el-input
+                v-else
+                size="small"
+                class="input-new-tag"
+                ref="tag"
+                @blur="closeInput(tag,index)"
+                v-model="tag.tag_name"
+              ></el-input>
             </span>
-
           </div>
-           <!-- <v-card-actions>
-            <div class="flex-grow-1"></div> -->
-             <!-- <v-row> -->
-                <!-- <v-btn color="primary"  style="margin-right:10px;" @click="ischeck(radioGroup)">确认</v-btn>
-                <v-btn color="primary"  @click="back" >取消</v-btn> -->
-             <!-- </v-row> -->
+          <!-- <v-card-actions>
+          <div class="flex-grow-1"></div>-->
+          <!-- <v-row> -->
+          <!-- <v-btn color="primary"  style="margin-right:10px;" @click="ischeck(radioGroup)">确认</v-btn>
+          <v-btn color="primary"  @click="back" >取消</v-btn>-->
+          <!-- </v-row> -->
           <!-- </v-card-actions> -->
         </v-card>
-
       </v-col>
     </v-row>
 
@@ -60,7 +64,7 @@ export default {
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-      taglist:[]
+      taglist: []
     };
   },
   components: {},
@@ -68,49 +72,50 @@ export default {
     this.getdata(1);
   },
   methods: {
-    handleClose(tag,type) {
-
-      this.$axios.post('/api/admin/tag/deleteTag',{
-        tag_id:tag,
-        is_del:type==1?0:1
-      }).then(res=>{
-          if(res.data.flag===true){
-             this.$message.success(res.data.msg)
-             this.getdata(1)
-          }else{
-            this.$message.error(res.data.msg)
+    handleClose(tag, type) {
+      this.$axios
+        .post("/api/admin/tag/deleteTag", {
+          tag_id: tag,
+          is_del: type == 1 ? 0 : 1
+        })
+        .then(res => {
+          if (res.data.flag === true) {
+            this.$message.success(res.data.msg);
+            this.getdata(1);
+          } else {
+            this.$message.error(res.data.msg);
           }
-      })
+        });
     },
-    closeInput(tag,index){
-      if(tag.tag_name==this.taglist[index]){
-
-      }else{
-         this.$axios.post('/api/admin/tag/updateTag',{
-        tag_id:tag.id,
-        tag_name:tag.tag_name
-      }).then(res=>{
-        if(res.data.flag===true){
-          this.getdata(1)
-        }else{
-          this.$message.error(res.data.msg)
-          this.getdata(1)
-        }
-      })
+    closeInput(tag, index) {
+      if (tag.tag_name == this.taglist[index]) {
+        console.log(1);
+      } else {
+        this.$axios
+          .post("/api/admin/tag/updateTag", {
+            tag_id: tag.id,
+            tag_name: tag.tag_name
+          })
+          .then(res => {
+            if (res.data.flag === true) {
+              this.getdata(1);
+            } else {
+              this.$message.error(res.data.msg);
+              this.getdata(1);
+            }
+          });
       }
 
       //
     },
-    updateInfo(tag,index){
-      tag.isupadate=1
+    updateInfo(tag, index) {
+      tag.isupadate = 1;
 
-      this.$set(this.dynamicTags[index],index,tag)
-
+      this.$set(this.dynamicTags[index], index, tag);
       this.$nextTick(function() {
-        console.log(this.$refs.tag)
-        this.$refs.tag[this.$refs.tag.length-1].$refs.input.focus();
+        console.log(this.$refs.tag);
+        this.$refs.tag[this.$refs.tag.length - 1].$refs.input.focus();
       });
-
     },
     showInput() {
       this.inputVisible = true;
@@ -119,17 +124,19 @@ export default {
       });
     },
     handleInputConfirm() {
-      if(this.inputValue){
-         this.$axios.post('/api/admin/tag/insertTag',{
-          tag_name:this.inputValue
-        }).then(res=>{
-            if(res.data.flag===true){
-               this.getdata(1)
-               this.inputVisible = false;
-               this.inputValue=''
+      if (this.inputValue) {
+        this.$axios
+          .post("/api/admin/tag/insertTag", {
+            tag_name: this.inputValue
+          })
+          .then(res => {
+            if (res.data.flag === true) {
+              this.getdata(1);
+              this.inputVisible = false;
+              this.inputValue = "";
             }
-        })
-      }else{
+          });
+      } else {
         this.inputVisible = false;
       }
 
@@ -149,7 +156,6 @@ export default {
       }
     },
 
-
     getnewdata(val) {
       this.page = 1;
       if (val) {
@@ -161,21 +167,21 @@ export default {
       }
     },
     getdata(page) {
-      var num=page*1-1
-      this.taglist=[]
+      var num = page * 1 - 1;
+      this.taglist = [];
       this.$axios
         .get("api/admin/tag/getAll?limit=" + this.limt + "&offset=" + num)
         .then(res => {
           if (res.data.flag === true) {
-            res.data.data.info.forEach(item=>{
-              this.taglist.push(item.tag_name)
-            })
+            res.data.data.info.forEach(item => {
+              this.taglist.push(item.tag_name);
+            });
             this.dynamicTags = res.data.data.info;
 
-            this.dynamicTags.forEach((item)=>{
-              item.isupadate=0
+            this.dynamicTags.forEach(item => {
+              item.isupadate = 0;
             });
-            console.log('8888888888',this.taglist)
+            console.log("8888888888", this.taglist);
             this.total = Math.ceil(Number(res.data.data.count) / this.limt);
           }
         });
@@ -184,13 +190,13 @@ export default {
 };
 </script>
 <style>
- .el-tag {
+.el-tag {
   margin-left: 10px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 .button-new-tag {
-  margin:0 0 10px 10px !important;
+  margin: 0 0 10px 10px !important;
   height: 32px;
   line-height: 30px;
   padding-top: 0;
@@ -199,7 +205,7 @@ export default {
 .input-new-tag {
   width: 90px !important;
   margin-left: 10px;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
   vertical-align: bottom;
 }
 </style>

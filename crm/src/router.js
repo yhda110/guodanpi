@@ -5,6 +5,7 @@ import login from './views/Login.vue'
 import MainView from './views/MainView.vue'
 import postsDetail from './views/PostsDetail.vue'
 import tags from './views/tags.vue'
+import message from './views/Message.vue'
 import userList from './views/userList.vue'
 Vue.use(Router)
 const router = new Router({
@@ -42,6 +43,12 @@ const router = new Router({
           path: '/tags',
           name: 'tags',
           component: tags,
+        },
+        {
+          path: '/message',
+          name: 'message',
+          component:  message,
+
         }
       ]
     }

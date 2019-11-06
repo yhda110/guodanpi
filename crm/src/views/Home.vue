@@ -118,6 +118,16 @@ export default {
             { icon: 'content_copy', text: '用户列表', routerName: '/userList' }
           ],
         },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: '短信验证管理',
+          model: false,
+          children: [
+            { icon: 'content_copy', text: '短信列表', routerName: '/Message' },
+
+          ],
+        }
 			]
 			// slidebarData: [
       //   { icon: 'contacts', text: 'Contacts' },
