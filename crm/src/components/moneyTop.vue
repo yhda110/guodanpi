@@ -1,12 +1,17 @@
 <template>
-  <v-col cols="12" sm="8" md="4">
+<div style="margin-bottom:10px;">
     <v-card>
       <v-card-actions>
-          <v-btn color="primary">发送条数：{{is_send_num}}</v-btn>
-          <v-btn color="primary">余额：{{cost}}</v-btn>
+        <div style="display:flex;justify-content:flex-end;width:100%;">
+            <span>已发送：<span style="color:#2196F3;">{{is_send_num}}</span>&nbsp;条</span>
+            <span style="margin-left:20px;">余额：<span style="color:red;">{{cost}}</span></span>
+              <!--<v-btn color="primary">发送条数：</v-btn>
+            <v-btn color="primary"></v-btn> -->
+        </div>
+
       </v-card-actions>
     </v-card>
-  </v-col>
+</div>
 </template>
 
 <script>
@@ -35,3 +40,6 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+
+</style>
