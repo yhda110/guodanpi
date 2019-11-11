@@ -1,6 +1,6 @@
 <template>
     <v-container class="fill-witdh" fluid>
-        <moneyTop/>
+        <moneyTop ref="header" v-on:getmoney="getmoney"/>
         <v-tabs>
             <v-tab v-for="item in tabslist" :key="item.id" @change="getnewdata(item.id)">{{item.name}}</v-tab>
         </v-tabs>
@@ -11,9 +11,9 @@
                     <th class="text-left">id</th>
                     <th class="text-left">手机号码</th>
                     <th class="text-left">ip</th>
-                    <th class="text-left">内容</th>
+                    <th style="width:200px;" class="text-left"><div style="width:300px;">内容</div></th>
                     <th class="text-left">验证码</th>
-                    <th style="width:30px;" class="text-left">果丹皮订单号</th>
+                    <th class="text-left">果丹皮订单号</th>
                     <th class="text-left">短信订单号</th>
                     <th class="text-left">错误码</th>
                     <th class="text-left">状态</th>
@@ -35,12 +35,12 @@
                     <td>{{ item.create_time }}</td>
                     <td class="text-center" v-if="item.is_send == 0">
                         <v-btn color="primary" :x-small="true"
-                               @click="deleteItem(item.id,0)">重新发送
+                               @click="sendTwo(item)">重新发送
                         </v-btn>
                         <!-- <v-btn color="primary" x-small=true @click="login">登录</v-btn> -->
                     </td>
                     <td class="text-center" v-else>
-                            <v-btn disabled color="primary" :x-small="true" >
+                            <v-btn disabled color="primary"  @click="getmoney(item)" :x-small="true" >
                                 发送成功
                             </v-btn>
                             <!-- <v-btn color="primary" x-small=true @click="login">登录</v-btn> -->
@@ -137,19 +137,22 @@
             look(val) {
                 this.$router.push({path: '/postsDetail', query: {id: val, type: this.defaultType}})
             },
-            deleteItem(val, type) {
-                this.$axios.post("/api/admin/thread/publishThread", {
-                    thread_id: val,
-                    is_del: type
+            sendTwo(val) {
+                this.$axios.post("/api/msg/sendFailMsg", {
+                    mobile: val.mobile,
+                    msg_id: val.id
                 }).then(res => {
                     if (res.data.flag === true) {
-                        this.$message.success(res.data.msg)
+                        this.$message.success(res.data.msg);
                         this.getdata(this.page, this.defaultType)
                     } else {
                         this.$message.error(res.data.msg)
 
                     }
                 })
+            },
+            getmoney(){
+                this.$refs.header.getmoney();
             },
             getnewdata(val) {
                 this.defaultType = val

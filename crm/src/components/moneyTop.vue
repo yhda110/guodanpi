@@ -31,8 +31,10 @@ export default {
                 this.cost = res.data.data.cost+"元"
                 this.is_send_num = res.data.data.count
 			})
-	}
-
+	},
+  getmoney(){
+    this.getdata();
+  }
 
   },
   created(){
