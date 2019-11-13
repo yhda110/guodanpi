@@ -10,7 +10,7 @@
             <div style="padding: 10px 10px 0 0; box-sizing:border-box;">
               <input class="upload" @change="change" type="file" multiple accept="image/*" />
               <ul>
-                <li v-for="item in newImage">
+                <li v-for="(item,index) in newImage" :key="index">
                   <img :src="item" alt />
                 </li>
               </ul>
@@ -50,7 +50,6 @@ export default {
       }
       let reader;
       let file;
-      let images = this.images;
       for (let i = 0; i < files.length; i++) {
         file = files[i];
         this.filesArr.push(file);
