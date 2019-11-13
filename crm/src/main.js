@@ -3,7 +3,6 @@ import './plugins/axios'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
-import "./assets/css/common.css";
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
