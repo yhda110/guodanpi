@@ -26,14 +26,18 @@
                 @click="updateInfo(tag,index)"
                 @close="handleClose(tag.id,tag.is_del)"
               >{{tag.tag_name}}</el-tag>
-              <el-input
-                v-else
+              <div  v-else>
+                <el-input
                 size="small"
                 class="input-new-tag"
                 ref="tag"
                 @blur="closeInput(tag,index)"
                 v-model="tag.tag_name"
-              ></el-input>
+                ></el-input>
+                <input type="color">
+
+              </div>
+
             </span>
           </div>
           <!-- <v-card-actions>

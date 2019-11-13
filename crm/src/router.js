@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from './views/Home.vue'
-import login from './views/Login.vue'
-import MainView from './views/MainView.vue'
-import postsDetail from './views/PostsDetail.vue'
-import tags from './views/tags.vue'
-import message from './views/Message.vue'
-import userList from './views/userList.vue'
+const home = resolve => require(["@/views/Home"], resolve);
+const login = resolve => require(["@/views/Login"], resolve);
+const postsDetail = resolve => require(["@/views/PostsDetail"], resolve);
+const MainView = resolve => require(["@/views/MainView"], resolve);
+const tags = resolve => require(["@/views/tags"], resolve);
+const message = resolve => require(["@/views/Message"], resolve);
+const userList = resolve => require(["@/views/userList"], resolve);
+const upload = resolve => require(["@/views/upload"], resolve);
 Vue.use(Router)
 const router = new Router({
   routes: [
@@ -48,7 +49,11 @@ const router = new Router({
           path: '/message',
           name: 'message',
           component:  message,
-
+        },
+        {
+          path: '/upload',
+          name: 'upload',
+          component:  upload,
         }
       ]
     }
