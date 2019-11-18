@@ -1,4 +1,4 @@
-# gdp_uniapp
+# gdp_app
 
 ## Project setup
 ```
