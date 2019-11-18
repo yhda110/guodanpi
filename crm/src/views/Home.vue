@@ -127,6 +127,16 @@ export default {
             { icon: 'content_copy', text: '短信列表', routerName: '/Message' },
 
           ],
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: '图片上传',
+          model: false,
+          children: [
+            { icon: 'content_copy', text: '图片上传', routerName: '/upload' },
+
+          ],
         }
 			]
 			// slidebarData: [

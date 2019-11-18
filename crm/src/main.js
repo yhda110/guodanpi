@@ -8,6 +8,8 @@ import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import element from './plugins/element'
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 Vue.use(element)
 Vue.config.productionTip = false
 new Vue({
