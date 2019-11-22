@@ -1,9 +1,9 @@
 {
-    "name" : "新闻资讯",
-    "appid" : "",
-    "description" : "基于uni-app开发的新闻/资讯类App模板",
-    "versionName" : "1.1.0",
-    "versionCode" : 110,
+    "name" : "果丹皮",
+    "appid" : "__UNI__3F5742F",
+    "description" : "装饰设计师交流平台",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
     "transformPx" : false,
     "uniStatistics" : {
         "enable" : true
@@ -31,7 +31,22 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {},
+            "icons" : {
+                "android" : {
+                    "hdpi" : "C:/Users/Administrator/Desktop/icon.png",
+                    "xhdpi" : "C:/Users/Administrator/Desktop/icon.png",
+                    "xxhdpi" : "C:/Users/Administrator/Desktop/icon.png",
+                    "xxxhdpi" : "C:/Users/Administrator/Desktop/icon.png"
+                }
+            },
+            "splashscreen" : {
+                "android" : {
+                    "hdpi" : "C:/Users/Administrator/Desktop/icon.png",
+                    "xhdpi" : "C:/Users/Administrator/Desktop/icon.png",
+                    "xxhdpi" : "C:/Users/Administrator/Desktop/icon.png"
+                }
+            }
         }
     },
     "quickapp" : {},

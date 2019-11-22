@@ -1,5 +1,12 @@
 {
-	"pages": [{
+	"pages": [
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText":"果丹皮 - 登录"
+			}
+		},
+		{
 			"path": "pages/news/index",
 			"style": {}
 		},
@@ -11,7 +18,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "新闻资讯",
-		"navigationBarBackgroundColor": "#2F85FC",
+		"navigationBarBackgroundColor": "#85ca9e",
 		"backgroundColor": "#FFFFFF"
 	}
 }
