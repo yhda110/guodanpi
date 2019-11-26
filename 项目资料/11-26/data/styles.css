@@ -9,6 +9,8 @@
 }
 .box_1 {
 }
+.box_2 {
+}
 .ellipse {
 }
 .image {
@@ -16,6 +18,9 @@
 .placeholder {
 }
 .button {
+}
+.link_button {
+  color:#169BD5;
 }
 ._一级标题 {
   font-family:'Arial Normal', 'Arial';
@@ -67,6 +72,10 @@
 }
 ._文本链接 {
   color:#0000FF;
+}
+.line {
+}
+.arrow {
 }
 .snapshot {
 }
