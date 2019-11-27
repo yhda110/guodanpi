@@ -1,60 +1,60 @@
 <template>
 	<view>
-		<view class="login">
-
-
+		<view class="login" style="z-index:999;">
 			<image class="welcome" src="https://lzjrys.store/86227201911221503413174.png" mode=""></image>
-			<image class="tologin" src="https://lzjrys.store/60370201911221507424426.png" mode=""></image>
-			<!-- 单独拿出去作为组件 -->
+			<image class="tologin" src="https://lzjrys.store/60370201911221507424426.png" mode="" v-if="islogin==true" style="width:348upx;"></image>
+			<image class="tologin" src="https://lzjrys.store/f1352201911251433595180.png" mode="" v-else  style="width:394upx;"></image>
 			<view class="choose_type">
-				<view class="login_text">登录</view>
-				<view class="login_text no_action">注册</view>
+				<text class="login_text">{{islogin==true?'登录':'注册'}}</text>
+				<text class="login_text no_action" @tap="switchTab">{{islogin==true?'注册':'登录'}}</text>
 			</view>
-			<!-- todo 修改为组件 -->
-			<view class="login_opreation">
-				<view class="phone_wrap">
-					<view class="phone_icon">
-						<image src="https://lzjrys.store/615ff201911221523498111.png" mode=""></image>
+			<view class="select">
+				<view class="login_opreation">
+					<view class="phone_wrap">
+						<view class="phone_icon">
+							<image class="phone_icon_img" src="https://lzjrys.store/615ff201911221523498111.png" mode=""></image>
+						</view>
+						<input class="phone_icon_input" type="number" @input="inputPhone"  placeholder="请输入手机号" />
 					</view>
-					<input type="number" @input="inputPhone" class="phone_num" placeholder="请输入手机号" />
-				</view>
-				<view class="phone_wrap">
-					<view class="phone_icon">
-						<image src="https://lzjrys.store/9edc6201911221557408160.png" mode=""></image>
+					<!-- 密码登录 -->
+					<view class="phone_wrap" v-if="isInput==true">  
+						<view class="phone_icon">
+							<image class="phone_icon_img" src="https://lzjrys.store/9edc6201911221557408160.png" mode=""></image>
+						</view>
+						<input type="password" class="phone_icon_input"  @input="inputPass" placeholder="请输入密码" style="width: 300upx;" />
 					</view>
-					<input type="password" @input="inputPass" placeholder="请输入密码" class="phone_num" />
-				</view>
-				<!-- 错误提示 -->
-				<view class="error_tip" v-if="error_show">
-					<view class="error_icon">
-						!
+					<!-- 验证码登录 -->
+					<view class="phone_wrap" v-else>
+						<view class="phone_icon">
+							<image class="phone_icon_img" src="https://lzjrys.store/9edc6201911221557408160.png" mode=""></image>
+						</view>
+						<input type="number" class="phone_icon_input"  @input="inputPass" placeholder="请输入验证码" style="width: 222upx;"/>
+						<view class="vCode"  @tap="getCode()">
+						  <text class="vCodeText">{{text}}</text>
+						</view>
 					</view>
-					<view class="error_text">
-						{{error_text}}
-					</view>
+					<!-- 错误提示 -->
+					<!-- <view class="error_tip" v-if="error_show">
+						<text class="error_icon">!</text>
+						<text class="error_text">{{error_text}}</text>
+					</view> -->
 				</view>
 			</view>
 			<!-- 忘记密码 验证码登录 -->
-			<view class="otherType">
+			<view class="otherType" v-if="islogin">
 				<view class="forgetPass">
-					<view class="forget_icon">
-						?
-					</view>
-					<view class="forget_text">
-						忘记密码
-					</view>
+					<text class="forget_icon">?</text>
+					<text class="forget_text">忘记密码</text>
 				</view>
-				<view class="msgLogin">
-					验证码登录
-				</view>
+				<text class="msgLogin" @tap="switchLoginStyle">{{isInput==true?'验证码登录':'账号登录'}}</text>
 			</view>
 			<!-- 登录按钮 -->
-			<view class="doit" @click="doit">
-				立即登录
+			<view class="loginBtn">
+				<text class="doit" @click="doit()">{{islogin==true?'立即登录':'立即注册'}}</text>
 			</view>
 		</view>
 		<!-- 背景图片 -->
-		<image class="background_image" src="https://lzjrys.store/1ecc9201911221631332924.png" mode=""></image>
+		<image class="background-color_image" src="https://lzjrys.store/1ecc9201911221631332924.png" mode=""></image>
 	</view>
 </template>
 
@@ -64,47 +64,189 @@
 			return {
 				phone: "",
 				password:"",
-				error_text:"您输入的密码有误",
-				error_show:false
+				show:true,
+				islogin:true,  //判断页面是登陆还是注册  登录为true，注册为false
+				isInput:true,  //不同页面对应的input
+				text: '验证码', //按钮文字
+				currentTime: 60, //倒计时
 			}
 		},
 		methods:{
-			doit(){
-				uni.showLoading({
-					title:"验证中"
-				})
-				if(!this.phone){
-					this.error_show = true
-					this.error_text = "手机号不能为空"
-				}else if(!this.password){
-					this.error_show = true
-					this.error_text = "密码不能为空"
+			switchTab(){
+				this.islogin=!this.islogin;
+				this.isInput=!this.isInput;
+				this.phone='';
+				this.password='';
+				if(this.islogin==false){
+					this.isInput=false
 				}
-				uni.request({
-					url: this.$base_url + "api/web/login",
-					method:'post',
-					header:{
-						'content-type':"application/x-www-form-urlencoded"
-					},
-					data:{
-						mobile:this.phone,
-						password:this.password
-					},
-					success: (result) => {
-						uni.hideLoading();
-						if(!result.data.flag){
-							this.error_show = true;
-							this.error_text = result.data.msg
-						}else{
-							this.error_show = false
-							uni.showToast({
-								title:"登录成功",
-								duration:2000
-							})
-						}
-					}
-				});
 			},
+			switchLoginStyle(){
+				this.isInput=!this.isInput;
+			},
+			doit(){
+				var that=this;
+				if(that.islogin==true){
+					that.login();
+				}else{
+					that.register();
+				}
+			},
+			login(){   //登陆
+				if(!this.phone){
+					uni.showToast({
+						title: '手机号不能为空',
+						duration: 2000,
+						icon:'none'
+					});
+				}else if(!this.password){
+					uni.showToast({
+						title: '密码或验证码不能为空',
+						duration: 2000,
+						icon:'none'
+					});
+				}else{
+					uni.request({
+						url: this.$base_url + "api/web/login",
+						method:'post',
+						header:{
+							'content-type':"application/x-www-form-urlencoded"
+						},
+						data:{
+							mobile:this.phone,
+							password:this.password
+						},
+						success:function (result){
+							if(!result.data.flag){
+								uni.showToast({
+									title: result.data.msg,
+									duration: 2000,
+									icon:'none'
+								});
+							}else{
+								uni.showToast({
+									title:"登录成功",
+									duration:2000
+								})
+							}
+						}
+					});
+			   }
+			},
+			register(){   //注册
+				if(!this.phone){
+					uni.showToast({
+						title: '手机号不能为空',
+						duration: 2000,
+						icon:'none'
+					});
+				}else if(!this.password){
+					uni.showToast({
+						title: '验证码不能为空',
+						duration: 2000,
+						icon:'none'
+					});
+				}else{
+					uni.request({
+						url: this.$base_url + "api/web/phonelogin",
+						method:'post',
+						header:{
+							'content-type':"application/x-www-form-urlencoded",
+						},
+						data:{
+							mobile:this.phone,
+							code:this.password,
+						},
+						success:function (result){
+							if(!result.data.flag){
+								uni.showToast({
+									title: result.data.msg,
+									duration: 2000,
+									icon:'none'
+								});
+							}else{
+								uni.showToast({
+									title:"注册成功",
+									duration:2000
+								})
+							}
+						}
+					});
+				}
+			},
+			getCode(){  //获取验证码
+			    var that=this;
+				var phone=that.phone;
+				var currentTime = that.currentTime;
+				if(that.text=='验证码'){
+					if(!(/^1[3456789]\d{9}$/.test(phone))){
+						uni.showToast({
+							title: '手机号有误，请重新输入',
+							duration: 2000,
+							icon:'none'
+						});
+					}else{
+						uni.request({
+							url: that.$base_url + "api/msg/sendNote/doit",
+							method:'post',
+							header:{
+								'content-type':"application/x-www-form-urlencoded",
+								'SENDNOTECHECK':"dde3db21cd53e3bdd9155b3b8ad21f0d50dae06b"
+							},
+							data:{
+								mobile:that.phone,
+							},
+							success:function (result){
+								if(!result.data.flag){
+									uni.showToast({
+										title: result.data.msg,
+										duration: 2000,
+										icon:'none'
+									});
+								}else{
+									uni.showToast({
+										title:"验证码发送成功",
+										duration:2000
+									});
+								    var interval = setInterval(function () {
+									currentTime--; 
+									that.text=currentTime + 's';
+									if (currentTime <= 0) {
+									  clearInterval(interval)
+										that.text='验证码';
+										that.currentTime=60;
+									};
+								  }, 1000);
+								}
+							}
+						});
+					}
+			  }
+			},
+			// ceshi(){
+			// 	uni.request({
+			// 		url: "https://plus.grandlink.net/category/getCategoryList",
+			// 		method:'post',
+			// 		header:{
+			// 			'content-type':"application/json"
+			// 		},
+			// 		success:function (result){
+			// 			if(result.data.state==1){
+			// 				uni.showToast({
+			// 					title: result.data.msg,
+			// 					duration: 2000,
+			// 					icon:'none'
+			// 				});
+			// 			}else if(result.data.state==0){
+			// 				console.log(result)
+			// 				uni.showToast({
+			// 					title:"登录成功",
+			// 					duration:2000
+			// 				})
+			// 			}
+			// 		}
+			// 	});
+			// },
 			inputPhone(e){
 				this.phone = e.detail.value
 			},
@@ -119,67 +261,61 @@
 	/* #ifndef APP-PLUS */
 	page {
 		min-height: 100%;
-		background: white;
+		background-color: white;
 	}
 
 	/* #endif */
-	.background_image {
+	.background-color_image {
 		width: 807upx;
 		height: 1038upx;
 		position: fixed;
 		bottom: -300upx;
 		right: -300upx;
-		z-index:1;
 	}
-
 	.login {
 		padding: 0 83upx;
-		z-index:2;
+		z-index:999;
 	}
-
 	.welcome {
 		width: 348upx;
 		height: 60upx;
-		margin-top: 70rpx;
+		margin-top: 112upx;
 	}
-
-	.login .tologin {
+	.tologin {
 		width: 283upx;
 		height: 76upx;
-		margin-top: 30rpx;
+		margin-top: 50upx;
 	}
-
 	.choose_type {
 		flex: 1;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		margin-top: 32upx;
+		margin-top: 56upx;
 	}
-
-	.choose_type .login_text {
+	.login_text {
 		font-size: 40upx;
-		color: #85ca9e;
+		color:#85CA9E;
 		text-align: center;
 	}
-
-	.choose_type .login_text.no_action {
+	.no_action {
 		width: 128upx;
 		height: 60upx;
 		border-radius: 30upx;
-		background: rgba(133, 202, 158, 0.2);
+		background-color: rgba(133, 202, 158, 0.2);
 		font-size: 28upx;
 		line-height: 60upx;
 	}
-
+     .select{
+		 display: flex;
+		 align-items: center;
+		 margin-top: 60upx;
+	 }
 	.login_opreation {
 		width: 566upx;
 		height: 342upx;
-		background: white;
-		margin: 0 auto;
-		margin-top: 60upx;
+		background-color: white;
 		box-shadow: 0 15upx 10upx rgba(133, 202, 158, 0.2);
-		border-radius: 20upx;
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: center;
@@ -187,37 +323,34 @@
 		position: reletive;
 	}
 
-	.login_opreation .phone_wrap {
+	.phone_wrap {
 		height: 70upx;
 		width: 462upx;
-		background: #f7f7f7;
+		background-color: #f7f7f7;
 		border-radius: 35upx;
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
 	}
 
-	.login_opreation .phone_wrap .phone_icon {
+	.phone_icon {
 		width: 50upx;
 		height: 50upx;
 		border-radius: 50%;
-		background: rgba(133, 202, 158, 0.2);
-		position: reletive;
+		background-color: rgba(133, 202, 158, 0.2);
+		display: flex;
 		margin-left: 14upx;
+		align-items: center;
+		justify-content: center;
 	}
 
-	.phone_icon image {
+	.phone_icon_img{
 		width: 20upx;
 		height: 28upx;
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		margin: auto;
 	}
 
-	.login_opreation .phone_wrap input {
+	.phone_icon_input{
+		width: 300upx;
 		margin-left: 20upx;
 		font-size: 28upx;
 		color: #aba9a9;
@@ -231,24 +364,24 @@
 		color: white;
 		font-size: 24upx;
 		border-radius: 19upx;
-		background: rgba(255, 0, 0, 0.4);
+		background-color: rgba(255, 0, 0, 0.4);
 		position: absolute;
 		bottom: 30upx;
 		left: 114upx;
 		padding: 10upx;
 	}
 
-	.error_tip .error_icon {
+	.error_icon {
 		width: 26upx;
 		height: 26upx;
 		border-radius: 50%;
 		text-align: center;
 		line-height: 26upx;
-		background: red;
+		background-color: red;
 		color: white;
 	}
 
-	.error_tip .error_text {
+	.error_text {
 		margin-left: 10upx;
 	}
 
@@ -258,41 +391,47 @@
 		align-items: center;
 		font-size: 28upx;
 		padding: 0 30upx;
-		margin-top: 20upx;
+		margin-top: 50upx;
 
 	}
 
-	.otherType .forgetPass {
+	.forgetPass {
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
 	}
 
-	.otherType .forgetPass .forget_icon {
+	.forget_icon {
 		width: 34upx;
 		height: 34upx;
 		border-radius: 50%;
-		background: rgb(133, 202, 158);
+		background-color: rgb(133, 202, 158);
 		text-align: center;
 		line-height: 34upx;
 		color: white;
+		font-size: 28upx;
 	}
 
-	.otherType .forgetPass .forget_text {
+	.forget_text {
 		margin-left: 10upx;
 		color: #aba9a9;
 		font-weight: bold;
+		font-size: 34upx;
 	}
 
-	.otherType .msgLogin {
+	.msgLogin {
 		color: #6f6f6f;
 		font-weight: bold;
+		font-size: 34upx;
 	}
-
+	.loginBtn{
+		display: flex;
+		align-items: center;
+	}
 	.doit {
 		width: 480upx;
 		height: 70upx;
-		background: rgb(133, 202, 158);
+		background-color:#85CA9E;
 		color: white;
 		font-weight: bold;
 		text-align: center;
@@ -302,5 +441,18 @@
 		box-shadow: 0 10upx 15upx rgba(133, 202, 158, 0.6);
 		font-size: 34upx;
 		border-radius: 35upx;
+	}
+	.vCode{
+		height: 70upx;
+		width: 160upx;
+		background-color: #85CA9E;
+		border-radius: 35upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.vCodeText{
+		color: #FFFFFF;
+		font-size: 30upx;
 	}
 </style>
