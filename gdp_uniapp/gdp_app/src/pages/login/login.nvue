@@ -50,11 +50,11 @@
 			</view>
 			<!-- 登录按钮 -->
 			<view class="loginBtn">
-				<text class="doit" @click="doit()">{{islogin==true?'立即登录':'立即注册'}}</text>
+				<text class="doit" @click="doit()" style="z-index:2;">{{islogin==true?'立即登录':'立即注册'}}</text>
 			</view>
 		</view>
 		<!-- 背景图片 -->
-		<image class="background-color_image" src="https://lzjrys.store/1ecc9201911221631332924.png" mode=""></image>
+		<image class="background-color_image" style="z-index:1;" src="https://lzjrys.store/1ecc9201911221631332924.png" mode=""></image>
 	</view>
 </template>
 
@@ -425,7 +425,6 @@
 		font-size: 34upx;
 	}
 	.loginBtn{
-		display: flex;
 		align-items: center;
 	}
 	.doit {
