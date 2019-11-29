@@ -107,7 +107,7 @@
 					});
 				}else{
 					uni.request({
-						url: this.$base_url + "api/web/login",
+						url: "https://www.lzjrys.store/api/web/login",
 						method:'post',
 						header:{
 							'content-type':"application/x-www-form-urlencoded"
@@ -148,7 +148,7 @@
 					});
 				}else{
 					uni.request({
-						url: this.$base_url + "api/web/phonelogin",
+						url: "https://www.lzjrys.store/api/web/phonelogin",
 						method:'post',
 						header:{
 							'content-type':"application/x-www-form-urlencoded",
@@ -187,7 +187,7 @@
 						});
 					}else{
 						uni.request({
-							url: that.$base_url + "api/msg/sendNote/doit",
+							url: "https://www.lzjrys.store/api/msg/sendNote/doit",
 							method:'post',
 							header:{
 								'content-type':"application/x-www-form-urlencoded",
